@@ -467,3 +467,78 @@ h1 { font-size: 2.2rem; font-weight: 600; margin: 0; color: #333; }
 .btn-primary:hover {
     background-color: #0056b3;
 }
+/* --- ESTILOS AÑADIDOS PARA LA VERSIÓN CLIENTE --- */
+
+/* 1. Botón de Descargar Ficha Técnica (Más estético) */
+.tech-sheet-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 15px;
+    background-color: transparent;
+    border: 2px solid #007aff; /* Azul corporativo */
+    color: #007aff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.tech-sheet-button:hover {
+    background-color: #007aff;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
+}
+
+.tech-sheet-button svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor; /* El icono toma el color del texto */
+}
+
+/* 2. Contenedor de Botones del Presupuesto */
+.budget-actions {
+    display: grid;
+    grid-template-columns: 1fr; /* Una columna en móviles */
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Estilos específicos para diferenciar acciones */
+.btn-whatsapp {
+    background-color: #25D366; /* Verde WhatsApp */
+    color: white;
+    border: none; padding: 12px; border-radius: 6px; font-weight: bold;
+}
+.btn-email {
+    background-color: #ffcc00; /* Amarillo Email */
+    color: #333;
+    border: none; padding: 12px; border-radius: 6px; font-weight: bold;
+}
+.btn-order {
+    background-color: #007aff; /* Azul CVTools */
+    color: white;
+    border: none; padding: 12px; border-radius: 6px; font-weight: bold;
+}
+.btn-danger {
+    background-color: #dc3545; /* Rojo Borrar */
+    color: white;
+    border: none; padding: 12px; border-radius: 6px; font-weight: bold;
+}
+
+/* En pantallas grandes, poner botones en 2 columnas */
+@media (min-width: 600px) {
+    .budget-actions {
+        grid-template-columns: 1fr 1fr;
+    }
+    /* El botón de borrar que ocupe todo el ancho abajo o arriba */
+    .btn-danger {
+        grid-column: 1 / -1; 
+        order: 4; /* Que aparezca al final */
+    }
+}
