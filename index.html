@@ -9,33 +9,57 @@
 <body>
     <div class="container">
         <header>
-            <!-- Logo personalizado -->
-            <img src="img/logo.png" alt="Logotipo" class="main-logo">
+            <!-- Contenedor para dos logos -->
+            <div class="header-logos">
+                <img src="img/logo.png" alt="Logo Cliente" class="client-logo">
+                <!-- Signo visual de colaboración (opcional) -->
+                <span style="font-size:20px; color:#ccc;">✕</span>
+                <img src="img/cvtools.png" alt="CV Tools" class="provider-logo">
+            </div>
             <h1>Portal de Gestión</h1>
         </header>
 
         <main class="menu-grid">
-            <!-- 1. Buscador, Precios y Stock -->
+            <!-- 1. Buscador -->
             <a href="buscador.html" class="menu-card card-1">
                 <h2>🛒 Realizar Pedido / Presupuesto</h2>
-                <p>Consulta tus precios netos, stock en tiempo real y crea presupuestos para tus clientes.</p>
+                <p>Precios netos, stock en tiempo real y herramienta de venta por WhatsApp.</p>
             </a>
 
-            <!-- 2. Fichas Técnicas -->
+            <!-- 2. Descargas (NUEVO) -->
+            <div class="menu-card card-3">
+                <h2>📥 Catálogo y Tarifas</h2>
+                <p>Descarga la documentación actualizada.</p>
+                <div class="download-links-wrapper">
+                    <a href="https://drive.google.com/file/d/1hGIb-8DpEWCIAgVW5xJ3a23ugO5PZuOO/view?usp=drive_link" target="_blank" class="btn-download-ghost">
+                        📄 Ver Catálogo PDF
+                    </a>
+                    <a href="https://docs.google.com/spreadsheets/d/1DhbKMFnJCfqO9ujj9d4Z8eezPCAPth0nZ0qPMMcWLbQ/edit?usp=drive_link" target="_blank" class="btn-download-ghost">
+                        📊 Ver Tarifa Excel
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3. Fichas -->
             <a href="fichas.html" class="menu-card card-5">
                 <h2>📄 Fichas Técnicas</h2>
-                <p>Descarga documentación técnica y certificados de los productos.</p>
+                <p>Buscador de fichas técnicas y certificados.</p>
             </a>
             
-            <!-- 3. Garantías -->
+            <!-- 4. Garantías -->
             <a href="garantias.html" class="menu-card card-2">
                 <h2>⚠️ Gestión de Garantías</h2>
-                <p>Formulario para tramitar incidencias o devoluciones.</p>
+                <p>Formulario para tramitar devoluciones e incidencias.</p>
             </a>
         </main>
 
         <footer class="site-footer">
-            <p>&copy; <span id="year"></span>. Todos los derechos reservados.</p>
+            <p><strong>CV Tools &copy; <span id="year"></span></strong></p>
+            <p style="max-width: 600px; margin: 10px auto; font-size: 0.9rem; color: #666; line-height: 1.4;">
+                Esta herramienta ha sido diseñada para facilitar y agilizar el trabajo conjunto. 
+                Estamos comprometidos con tu éxito: si tienes cualquier inquietud o sugerencia para mejorarla, 
+                por favor háznoslo saber.
+            </p>
         </footer>
     </div>
 

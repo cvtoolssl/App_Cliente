@@ -5,105 +5,110 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Garantías</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Librerías PDF necesarias -->
+    <!-- Librería PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
-    <!-- Logo oculto para usar en el PDF -->
+    <!-- Logo oculto para PDF -->
     <img id="pdf-logo" src="img/logo.png" style="display:none;" alt="Logo">
 
     <div class="container">
         <header>
-            <img src="img/logo.png" alt="Logo" class="main-logo">
+            <div class="header-logos">
+                <img src="img/logo.png" alt="Logo" class="client-logo">
+                <img src="img/cvtools.png" alt="CV Tools" class="provider-logo">
+            </div>
             <h1>Gestión de Garantías</h1>
         </header>
 
         <main class="content-box">
-            <h2>Formulario de Reclamación</h2>
-            <p>Rellena los datos y adjunta hasta 2 fotos. Se descargará un PDF que podrás enviarnos por correo.</p>
+            <p style="margin-bottom:20px;">Rellena los datos de la incidencia. Generaremos un PDF con las imágenes adjuntas listo para enviar.</p>
             
-            <form id="warrantyForm" style="display:flex; flex-direction:column; gap:15px; text-align:left;">
+            <!-- FORMULARIO ESTILIZADO -->
+            <form id="warrantyForm" class="warranty-form">
                 
-                <div>
-                    <label>Referencia del Producto:</label>
-                    <input type="text" id="ref" class="qty-input" style="width:100%" required placeholder="Ej: 12345">
+                <div class="form-group">
+                    <label for="ref">Referencia del Producto:</label>
+                    <input type="text" id="ref" class="form-input" required placeholder="Ej: 12345-X">
                 </div>
 
-                <div>
-                    <label>Nº Albarán / Factura:</label>
-                    <input type="text" id="invoice" class="qty-input" style="width:100%" required placeholder="Ej: FA-2024-001">
+                <div class="form-group">
+                    <label for="invoice">Nº Albarán / Factura:</label>
+                    <input type="text" id="invoice" class="form-input" required placeholder="Ej: FA-2024-001">
                 </div>
 
-                <div>
-                    <label>Descripción de la incidencia:</label>
-                    <textarea id="reason" rows="4" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:5px;" required placeholder="Explica brevemente el problema..."></textarea>
+                <div class="form-group">
+                    <label for="reason">Descripción de la incidencia:</label>
+                    <textarea id="reason" rows="5" class="form-textarea" required placeholder="Describe brevemente qué le ocurre al producto..."></textarea>
                 </div>
 
-                <div style="background:#f9f9f9; padding:10px; border-radius:5px;">
-                    <label style="font-weight:bold;">📸 Adjuntar Fotos (Máx 2):</label>
-                    <br><br>
-                    <label>Foto 1:</label>
-                    <input type="file" id="img1" accept="image/*">
-                    <br><br>
-                    <label>Foto 2:</label>
-                    <input type="file" id="img2" accept="image/*">
+                <!-- Área de fotos mejorada -->
+                <div class="upload-area">
+                    <h4>📸 Evidencias Fotográficas</h4>
+                    <div class="file-input-wrapper">
+                        <label style="font-size:0.9em; display:block; margin-bottom:5px;">Foto 1 (Producto completo):</label>
+                        <input type="file" id="img1" accept="image/*" style="width:100%">
+                    </div>
+                    <div class="file-input-wrapper">
+                        <label style="font-size:0.9em; display:block; margin-bottom:5px;">Foto 2 (Detalle del fallo):</label>
+                        <input type="file" id="img2" accept="image/*" style="width:100%">
+                    </div>
                 </div>
 
-                <button type="submit" class="download-button pdf" id="btn-generate">
+                <button type="submit" class="download-button pdf" id="btn-generate" style="margin-top:10px;">
                     📥 Generar y Descargar PDF
                 </button>
             </form>
 
-            <a href="index.html" class="back-link">← Volver al menú principal</a>
+            <a href="index.html" class="back-link" style="margin-top:30px;">← Volver al menú principal</a>
         </main>
     </div>
 
-    <!-- LÓGICA PARA GENERAR EL PDF CON IMÁGENES -->
+    <!-- Script de generación de PDF -->
     <script>
         document.getElementById('warrantyForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const btn = document.getElementById('btn-generate');
             const originalText = btn.textContent;
-            btn.textContent = "Generando PDF...";
+            btn.textContent = "⏳ Procesando imágenes...";
             btn.disabled = true;
 
             try {
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF();
                 
-                // 1. LOGO
+                // 1. Cabecera PDF
                 const logoElem = document.getElementById('pdf-logo');
-                try {
-                    doc.addImage(logoElem, 'PNG', 15, 10, 30, 10); // Ajustar tamaño logo
-                } catch(err) { console.log("Logo no cargado"); }
+                try { doc.addImage(logoElem, 'PNG', 15, 10, 30, 10); } catch(err){}
 
-                // 2. TÍTULO Y FECHA
                 doc.setFontSize(16);
-                doc.text("FORMULARIO DE RECLAMACIÓN", 195, 20, { align: 'right' });
+                doc.text("HOJA DE RECLAMACIÓN", 195, 20, { align: 'right' });
                 doc.setFontSize(10);
                 doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 195, 26, { align: 'right' });
 
-                // 3. DATOS DEL FORMULARIO
+                // 2. Datos
                 const ref = document.getElementById('ref').value;
                 const invoice = document.getElementById('invoice').value;
                 const reason = document.getElementById('reason').value;
 
-                doc.setFontSize(11);
+                doc.setFont("helvetica", "bold");
                 doc.text("DATOS DE LA INCIDENCIA:", 15, 45);
+                doc.setFont("helvetica", "normal");
                 
-                doc.setFontSize(10);
-                doc.text(`Referencia Producto:  ${ref}`, 15, 55);
-                doc.text(`Nº Factura/Albarán:   ${invoice}`, 15, 62);
+                doc.text(`Producto (Ref):`, 15, 55); 
+                doc.text(ref, 60, 55);
                 
-                doc.text("Descripción del problema:", 15, 72);
-                // Dividir texto largo para que no se salga
+                doc.text(`Documento (Fac/Alb):`, 15, 62);
+                doc.text(invoice, 60, 62);
+                
+                doc.text("Motivo:", 15, 75);
                 const splitReason = doc.splitTextToSize(reason, 180); 
-                doc.text(splitReason, 15, 78);
+                doc.text(splitReason, 15, 82);
 
-                let currentY = 78 + (splitReason.length * 5) + 10;
+                let currentY = 82 + (splitReason.length * 5) + 10;
 
-                // 4. PROCESAR IMÁGENES (Función auxiliar)
+                // 3. Imágenes
                 const readImage = (input) => {
                     if (input.files && input.files[0]) {
                         return new Promise((resolve) => {
@@ -118,29 +123,34 @@
                 const img1Data = await readImage(document.getElementById('img1'));
                 const img2Data = await readImage(document.getElementById('img2'));
 
-                // 5. AÑADIR IMÁGENES AL PDF
                 if (img1Data || img2Data) {
-                    doc.text("EVIDENCIAS FOTOGRÁFICAS:", 15, currentY);
-                    currentY += 10;
+                    doc.line(15, currentY - 5, 195, currentY - 5);
+                    doc.setFont("helvetica", "bold");
+                    doc.text("FOTOS ADJUNTAS:", 15, currentY + 5);
+                    currentY += 15;
 
-                    // Tamaño fotos: 80x60 mm aprox
+                    // Ajuste para que quepan bien
+                    const imgWidth = 80;
+                    const imgHeight = 60;
+
                     if (img1Data) {
-                        doc.addImage(img1Data, 'JPEG', 15, currentY, 80, 60);
+                        doc.addImage(img1Data, 'JPEG', 15, currentY, imgWidth, imgHeight);
+                        doc.text("Foto 1", 15, currentY + imgHeight + 5);
                         if (img2Data) {
-                            doc.addImage(img2Data, 'JPEG', 105, currentY, 80, 60);
+                            doc.addImage(img2Data, 'JPEG', 110, currentY, imgWidth, imgHeight);
+                            doc.text("Foto 2", 110, currentY + imgHeight + 5);
                         }
                     } else if (img2Data) {
-                        doc.addImage(img2Data, 'JPEG', 15, currentY, 80, 60);
+                        doc.addImage(img2Data, 'JPEG', 15, currentY, imgWidth, imgHeight);
                     }
                 }
 
-                // 6. GUARDAR
-                doc.save(`Reclamacion_${ref}.pdf`);
-                alert("PDF Generado correctamente. Por favor, envíalo por correo a tu comercial.");
+                doc.save(`Reclamacion_${ref.replace(/[^a-z0-9]/gi, '_')}.pdf`);
+                alert("✅ PDF descargado. Ahora puedes enviarlo por correo.");
 
             } catch (error) {
                 console.error(error);
-                alert("Error al generar el PDF. Intenta usar imágenes JPG/PNG más ligeras.");
+                alert("Hubo un error al generar el PDF. Prueba con imágenes más pequeñas.");
             }
 
             btn.textContent = originalText;
