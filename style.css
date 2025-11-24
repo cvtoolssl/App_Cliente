@@ -542,3 +542,61 @@ h1 { font-size: 2.2rem; font-weight: 600; margin: 0; color: #333; }
         order: 4; /* Que aparezca al final */
     }
 }
+/* --- ESTILOS AÑADIDOS O CORREGIDOS --- */
+
+/* 1. Botón de Añadir al Presupuesto (Recuperado) */
+.add-budget-btn {
+    background-color: #007aff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 10px;
+    width: 100%;
+    transition: background 0.2s;
+}
+.add-budget-btn:hover { background-color: #005bb5; }
+
+/* 2. Botón de Descargar Ficha Técnica (Estilo Outline) */
+.tech-sheet-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    background-color: transparent;
+    border: 2px solid #007aff;
+    color: #007aff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.tech-sheet-button:hover {
+    background-color: #007aff;
+    color: white;
+}
+.tech-sheet-button svg { width: 18px; height: 18px; fill: currentColor; }
+
+/* 3. Cuadrícula de Botones del Modal Presupuesto */
+.budget-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 20px;
+}
+@media (min-width: 600px) {
+    .budget-actions { grid-template-columns: 1fr 1fr; }
+    .btn-danger { grid-column: 1 / -1; order: 10; } /* El botón borrar abajo del todo */
+}
+
+/* Colores de los botones de acción */
+.btn-whatsapp { background-color: #25D366; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+.btn-email    { background-color: #f0ad4e; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+.btn-order    { background-color: #007aff; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+.btn-danger   { background-color: #dc3545; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }

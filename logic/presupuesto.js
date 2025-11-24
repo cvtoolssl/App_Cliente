@@ -1,23 +1,20 @@
 // logic/presupuesto.js
 
-// --- CONFIGURACIÓN ---
-// Enlace donde están las fichas (ajusta esto si cambia la URL final)
-const URL_FICHAS_WEB = "https://cvtoolssl.github.io/Alta_Cliente/fichas.html";
-// Correo donde recibiréis los pedidos
-const EMAIL_PEDIDOS_CVTOOLS = "pedidos@cvtools.com"; 
+// === CONFIGURACIÓN ===
+// Asegúrate de que este enlace sea correcto para que los clientes puedan descargar fichas
+const URL_FICHAS_WEB = "https://cvtoolssl.github.io/Alta_Cliente/fichas.html"; 
+const EMAIL_PEDIDOS = "pedidos@cvtools.com"; // Vuestro correo para recibir pedidos
 
 let budget = [];
 const budgetModal = document.getElementById('budget-modal');
 const budgetCountSpan = document.getElementById('budget-count');
 const budgetItemsContainer = document.getElementById('budget-items-container');
 
-// --- GESTIÓN DEL ARRAY DEL PRESUPUESTO ---
-
+// --- AÑADIR / QUITAR ---
 function addToBudget(ref, desc, stdPrice, qty, netInfo, minQty, netPriceVal, stockText) {
     qty = parseInt(qty) || 1;
-    if (qty < 1) qty = 1;
-    
     const existing = budget.find(i => i.ref === ref);
+    
     if (existing) {
         existing.qty += qty;
     } else {
@@ -26,7 +23,6 @@ function addToBudget(ref, desc, stdPrice, qty, netInfo, minQty, netPriceVal, sto
             netInfo, minQty, netPriceVal, stockText: stockText || "Consultar"
         });
     }
-    
     updateBudgetUI();
     animateFab();
 }
@@ -37,7 +33,7 @@ function removeFromBudget(index) {
 }
 
 function clearBudget() {
-    if(confirm('¿Seguro que quieres borrar todo el carrito?')) {
+    if(confirm('¿Estás seguro de vaciar todo?')) {
         budget = [];
         updateBudgetUI();
         toggleBudgetModal();
@@ -46,13 +42,14 @@ function clearBudget() {
 
 // --- CÁLCULOS ---
 function calculateItemCost(item) {
-    // Lógica: Si supera cantidad mínima y hay precio neto, usa el neto
+    // Usa precio neto si supera la cantidad mínima
     if (item.minQty > 0 && item.netPriceVal > 0 && item.qty >= item.minQty) {
         return { unit: item.netPriceVal, total: item.netPriceVal * item.qty, isNet: true };
     }
     return { unit: item.stdPrice, total: item.stdPrice * item.qty, isNet: false };
 }
 
+// --- INTERFAZ (UI) ---
 function updateBudgetUI() {
     if (budgetCountSpan) budgetCountSpan.textContent = budget.length;
     
@@ -67,8 +64,8 @@ function updateBudgetUI() {
             <div class="budget-item">
                 <div class="budget-item-info">
                     <strong>${item.desc}</strong>
-                    <br><span style="font-size:0.8em; color:#666">${item.ref} | ${item.stockText}</span>
-                    ${cost.isNet ? '<br><span style="color:green; font-size:0.8em">✅ Precio Neto aplicado</span>' : ''}
+                    <br><span style="font-size:0.8em; color:#555">${item.ref} | ${item.stockText}</span>
+                    ${cost.isNet ? '<br><span style="color:green; font-size:0.7em">✅ Neto aplicado</span>' : ''}
                 </div>
                 <div style="text-align:right">
                     <div>${item.qty} x ${cost.unit.toFixed(2)}€</div>
@@ -79,11 +76,9 @@ function updateBudgetUI() {
         `;
     });
 
-    if (budgetItemsContainer) {
-        budgetItemsContainer.innerHTML = budget.length ? html : '<p class="empty-msg">El carrito está vacío.</p>';
-        const totalDisplay = document.getElementById('budget-total');
-        if(totalDisplay) totalDisplay.textContent = subtotal.toFixed(2);
-    }
+    if (budgetItemsContainer) budgetItemsContainer.innerHTML = budget.length ? html : '<p class="empty-msg">Vacío</p>';
+    const totalDisplay = document.getElementById('budget-total');
+    if (totalDisplay) totalDisplay.textContent = subtotal.toFixed(2);
 }
 
 function toggleBudgetModal() {
@@ -99,96 +94,84 @@ function animateFab() {
 }
 
 // ============================================================
-// 🚀 FUNCIONES DE ENVÍO (AQUÍ ESTÁ LA NUEVA LÓGICA)
+// 🚀 FUNCIONES DE LOS 4 BOTONES
 // ============================================================
 
-// 1. AUXILIAR: PIDE EL MARGEN AL USUARIO
+// AUXILIAR: Pide margen
 function getMargin() {
-    let input = prompt("Introduce el % de Margen de beneficio para TU cliente:\n(Ejemplo: 20 para un 20%)", "0");
-    if (input === null) return null; // Cancelado
-    let margin = parseFloat(input);
-    return (isNaN(margin) || margin < 0) ? 0 : margin;
+    let input = prompt("Introduce el % de MARGEN para TU cliente (Ej: 20):", "0");
+    if (input === null) return null; 
+    let m = parseFloat(input);
+    return (isNaN(m) || m < 0) ? 0 : m;
 }
 
-// 2. AUXILIAR: GENERA EL TEXTO PARA EL CLIENTE FINAL (CON PRECIOS INFLADOS)
+// AUXILIAR: Genera texto para Cliente Final
 function generateClientText(margin) {
     let text = `📑 *PRESUPUESTO*\n📅 Fecha: ${new Date().toLocaleDateString()}\n--------------------------------\n\n`;
-    let finalTotal = 0;
+    let total = 0;
 
     budget.forEach(item => {
         const cost = calculateItemCost(item);
-        // Fórmula PVP = Coste * (1 + Margen/100)
+        // Inflamos el precio con el margen
         const pvpUnit = cost.unit * (1 + (margin / 100));
         const pvpTotal = pvpUnit * item.qty;
-        finalTotal += pvpTotal;
+        total += pvpTotal;
 
         text += `🔹 *${item.desc}*\n`;
-        text += `   Ref: ${item.ref}\n`; 
+        text += `   Ref: ${item.ref}\n`;
         text += `   Cant: ${item.qty} x ${pvpUnit.toFixed(2)} €\n`;
-        text += `   *Subtotal: ${pvpTotal.toFixed(2)} €*\n\n`;
+        text += `   Subtotal: ${pvpTotal.toFixed(2)} €\n\n`;
     });
 
     text += `--------------------------------\n`;
-    text += `💰 *TOTAL: ${finalTotal.toFixed(2)} €*\n`;
+    text += `💰 *TOTAL: ${total.toFixed(2)} €*\n`;
     text += `(Impuestos no incluidos)\n\n`;
     
-    // AÑADIDO: ENLACE A FICHAS
-    text += `📥 *Descarga las Fichas Técnicas y Certificados aquí:*\n${URL_FICHAS_WEB}`;
-
+    // ENLACE FICHAS TÉCNICAS
+    text += `📥 *Descarga Fichas Técnicas aquí:*\n${URL_FICHAS_WEB}`;
+    
     return text;
 }
 
-// --- OPCIÓN B: WHATSAPP A CLIENTE FINAL ---
+// 1. WHATSAPP (CLIENTE)
 function sendClientWhatsApp() {
-    if (budget.length === 0) return alert("El carrito está vacío");
-    
-    const margin = getMargin();
-    if (margin === null) return;
+    if (!budget.length) return alert("Carrito vacío");
+    const m = getMargin();
+    if (m === null) return;
 
-    const text = generateClientText(margin);
+    const text = generateClientText(m);
     
     navigator.clipboard.writeText(text).then(() => {
-        alert(`✅ Presupuesto con +${margin}% copiado.\nAhora pégalo en WhatsApp.`);
-        // Opcional: Abrir WhatsApp Web directamente
-        // window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-    }).catch(() => alert("Copiado al portapapeles. Pégalo en WhatsApp."));
+        alert("✅ Texto copiado. Pégalo en WhatsApp.");
+    }).catch(() => alert("Copiado al portapapeles."));
 }
 
-// --- OPCIÓN C: CORREO A CLIENTE FINAL ---
+// 2. EMAIL (CLIENTE)
 function sendClientEmail() {
-    if (budget.length === 0) return alert("El carrito está vacío");
+    if (!budget.length) return alert("Carrito vacío");
+    const m = getMargin();
+    if (m === null) return;
 
-    const margin = getMargin();
-    if (margin === null) return;
-
-    const body = generateClientText(margin);
-    const subject = "Presupuesto de Materiales";
-    
-    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const body = generateClientText(m);
+    window.location.href = `mailto:?subject=Presupuesto Materiales&body=${encodeURIComponent(body)}`;
 }
 
-// --- OPCIÓN D: PEDIDO A CVTOOLS (INTERNO) ---
+// 3. PEDIDO A CVTOOLS (INTERNO)
 function sendOrderToCVTools() {
-    if (budget.length === 0) return alert("El carrito está vacío");
+    if (!budget.length) return alert("Carrito vacío");
+    if (!confirm("¿Generar correo de pedido para CVTools?")) return;
 
-    if(!confirm("¿Generar pedido para enviar a CVTools?\n(Se usarán tus precios de coste)")) return;
-
-    // Generamos texto limpio para el proveedor (vosotros)
-    let text = `HOLA CVTOOLS, QUIERO REALIZAR EL SIGUIENTE PEDIDO:\n\n`;
-    let subtotal = 0;
+    let text = `HOLA CVTOOLS, SOLICITO EL SIGUIENTE MATERIAL:\n\n`;
+    let total = 0;
 
     budget.forEach(item => {
         const cost = calculateItemCost(item);
-        subtotal += cost.total;
-        // Formato simple: REF - DESC - CANT
+        total += cost.total;
         text += `[${item.ref}] ${item.desc} -> ${item.qty} uds\n`;
     });
 
-    text += `\nTotal Estimado (Coste): ${subtotal.toFixed(2)} €\n`;
-    text += `\nMis Datos:\n(Pon aquí tu nombre de empresa y nº cliente)`;
+    text += `\nTotal Coste Estimado: ${total.toFixed(2)} €\n`;
+    text += `\nMis datos de cliente:\n(Escribe aquí tu nombre/código)\n`;
 
-    const subject = `NUEVO PEDIDO - ${new Date().toLocaleDateString()}`;
-    
-    // Abrimos el cliente de correo dirigido a vosotros
-    window.location.href = `mailto:${EMAIL_PEDIDOS_CVTOOLS}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
+    window.location.href = `mailto:${EMAIL_PEDIDOS}?subject=PEDIDO WEB&body=${encodeURIComponent(text)}`;
 }

@@ -1,40 +1,80 @@
-<!-- VENTANA MODAL DEL PRESUPUESTO -->
-<div id="budget-modal" class="modal hidden">
-    <div class="modal-content">
-        <span class="close-modal" onclick="toggleBudgetModal()">&times;</span>
-        <h2>Tu Pedido / Presupuesto</h2>
-        
-        <!-- Lista de artículos -->
-        <div id="budget-items-container">
-            <p class="empty-msg">El carrito está vacío.</p>
-        </div>
-        
-        <!-- Pie del presupuesto -->
-        <div class="budget-footer">
-            <p class="total-display">Total Coste: <span id="budget-total">0.00</span> €</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador y Pedidos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-precios">
+    
+    <div class="container">
+        <header>
+            <img src="img/logo.png" alt="Logo" class="main-logo">
+            <h1>Buscador y Presupuestos</h1>
+        </header>
+
+        <main>
+            <div id="search-wrapper">
+                 <input type="text" id="searchInput" placeholder="Buscar por referencia o descripción...">
+                 <p class="stock-disclaimer">ℹ️ Stock actualizado diariamente a las 09:00 AM.</p>
+            </div>
+
+            <!-- Aquí se pintan los productos con JS -->
+            <div id="resultsContainer"></div>
             
-            <!-- NUEVOS BOTONES SEGÚN INSTRUCCIONES -->
-            <div class="budget-actions">
-                <!-- b. Enviar presupuesto al cliente por Whatsapp -->
-                <button onclick="sendClientWhatsApp()" class="btn-whatsapp">
-                    📲 Enviar a Cliente (WhatsApp)
-                </button>
+            <a href="index.html" class="back-link">← Volver al menú</a>
+        </main>
+    </div>
 
-                <!-- c. Enviar presupuesto al cliente por correo -->
-                <button onclick="sendClientEmail()" class="btn-email">
-                    📧 Enviar a Cliente (Correo)
-                </button>
+    <!-- BOTÓN FLOTANTE (CARRITO) -->
+    <div id="budget-fab" class="budget-fab" onclick="toggleBudgetModal()">
+        🛒 <span id="budget-count">0</span>
+    </div>
 
-                <!-- d. Enviar pedido a CVTools -->
-                <button onclick="sendOrderToCVTools()" class="btn-order">
-                    🏭 Enviar Pedido a CVTools
-                </button>
+    <!-- VENTANA MODAL DEL PRESUPUESTO -->
+    <div id="budget-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal" onclick="toggleBudgetModal()">&times;</span>
+            <h2>Tu Pedido / Presupuesto</h2>
+            
+            <!-- Lista de productos añadidos -->
+            <div id="budget-items-container">
+                <p class="empty-msg">El carrito está vacío.</p>
+            </div>
+            
+            <!-- Pie del presupuesto -->
+            <div class="budget-footer">
+                <p class="total-display">Total Coste (Neto): <span id="budget-total">0.00</span> €</p>
+                
+                <!-- LOS 4 BOTONES SOLICITADOS -->
+                <div class="budget-actions">
+                    <!-- b. WhatsApp a Cliente Final -->
+                    <button onclick="sendClientWhatsApp()" class="btn-whatsapp">
+                        📲 1. WhatsApp a Cliente
+                    </button>
 
-                <!-- a. Borrar -->
-                <button onclick="clearBudget()" class="btn-danger">
-                    🗑️ Borrar Todo
-                </button>
+                    <!-- c. Correo a Cliente Final -->
+                    <button onclick="sendClientEmail()" class="btn-email">
+                        📧 2. Correo a Cliente
+                    </button>
+
+                    <!-- d. Pedido a CVTools -->
+                    <button onclick="sendOrderToCVTools()" class="btn-order">
+                        🏭 3. Enviar Pedido a CVTools
+                    </button>
+
+                    <!-- a. Borrar -->
+                    <button onclick="clearBudget()" class="btn-danger">
+                        🗑️ Borrar Todo
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <!-- Lógica -->
+    <script src="logic/presupuesto.js"></script>
+    <script src="logic/script.js"></script>
+</body>
+</html>
