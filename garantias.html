@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Garantías</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-fichas">
+    <div class="container">
+        <header>
+            <img src="img/logo.png" alt="Logo" class="main-logo">
+            <h1>Gestión de Garantías y Reclamaciones</h1>
+        </header>
+
+        <main class="content-box">
+            <p>Para procesar una garantía, por favor completa la información a continuación y se abrirá tu cliente de correo. Recuerda adjuntar fotos del producto defectuoso.</p>
+            
+            <form id="claimForm" style="display:flex; flex-direction:column; gap:15px; max-width:500px; margin:0 auto; text-align:left;">
+                
+                <div>
+                    <label for="ref">Referencia del Producto:</label>
+                    <input type="text" id="ref" class="qty-input" style="width:100%" required>
+                </div>
+
+                <div>
+                    <label for="invoice">Número de Albarán/Factura:</label>
+                    <input type="text" id="invoice" class="qty-input" style="width:100%" required>
+                </div>
+
+                <div>
+                    <label for="reason">Motivo de la reclamación:</label>
+                    <textarea id="reason" rows="4" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:5px;" required></textarea>
+                </div>
+
+                <button type="submit" class="download-button pdf" style="width:100%; justify-content:center;">📧 Crear Correo de Reclamación</button>
+            </form>
+
+            <a href="index.html" class="back-link">← Volver al menú principal</a>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('claimForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const ref = document.getElementById('ref').value;
+            const invoice = document.getElementById('invoice').value;
+            const reason = document.getElementById('reason').value;
+            
+            // CONFIGURA AQUÍ EL CORREO DE DESTINO
+            const emailDestino = "calidad@tuempresa.com"; 
+            
+            const subject = `Reclamación Garantía - Ref: ${ref}`;
+            const body = `Hola,\n\nQuiero tramitar una garantía con los siguientes datos:\n\n- Producto: ${ref}\n- Factura/Albarán: ${invoice}\n- Motivo: ${reason}\n\n(Adjunto fotos a continuación)`;
+            
+            window.location.href = `mailto:${emailDestino}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Cliente - Grandes Cuentas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <!-- Logo personalizado -->
+            <img src="img/logo.png" alt="Logotipo" class="main-logo">
+            <h1>Portal de Gestión</h1>
+        </header>
+
+        <main class="menu-grid">
+            <!-- 1. Buscador, Precios y Stock -->
+            <a href="buscador.html" class="menu-card card-1">
+                <h2>🛒 Realizar Pedido / Presupuesto</h2>
+                <p>Consulta tus precios netos, stock en tiempo real y crea presupuestos para tus clientes.</p>
+            </a>
+
+            <!-- 2. Fichas Técnicas -->
+            <a href="fichas.html" class="menu-card card-5">
+                <h2>📄 Fichas Técnicas</h2>
+                <p>Descarga documentación técnica y certificados de los productos.</p>
+            </a>
+            
+            <!-- 3. Garantías -->
+            <a href="garantias.html" class="menu-card card-2">
+                <h2>⚠️ Gestión de Garantías</h2>
+                <p>Formulario para tramitar incidencias o devoluciones.</p>
+            </a>
+        </main>
+
+        <footer class="site-footer">
+            <p>&copy; <span id="year"></span>. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

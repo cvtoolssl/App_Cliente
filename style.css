@@ -1,0 +1,469 @@
+/* --- VARIABLES GLOBALES --- */
+:root {
+    --primary-color: #007aff;
+    --background-color: #f0f2f5;
+    --card-background: #ffffff;
+    --text-color: #1d2129;
+    --subtle-text: #65676b;
+    --border-color: #e4e6eb;
+    
+    /* Colores Pastel para Tarjetas */
+    --pastel-blue-bg: #e3f2fd; --pastel-blue-text: #0d47a1;
+    --pastel-green-bg: #e8f5e9; --pastel-green-text: #1b5e20;
+    --pastel-orange-bg: #fff3e0; --pastel-orange-text: #e65100;
+    --pastel-red-bg: #ffebee; --pastel-red-text: #b71c1c;
+    --pastel-cyan-bg: #e0f7fa; --pastel-cyan-text: #006064;
+    --pastel-pink-bg: #fce4ec; --pastel-pink-text: #880e4f;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystem-Font, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding-bottom: 80px; /* Espacio extra para que el botón flotante no tape contenido */
+}
+
+.container { max-width: 900px; margin: 0 auto; padding: 1rem; }
+
+/* --- HEADER --- */
+header { 
+    text-align: center; 
+    padding: 1.5rem; 
+    margin-bottom: 2.5rem; 
+    border-radius: 16px; 
+    background-color: var(--card-background); 
+    border: 1px solid var(--border-color); 
+}
+.main-logo { max-width: 120px; margin-bottom: 1rem; }
+h1 { font-size: 2.2rem; font-weight: 600; margin: 0; color: #333; }
+
+/* Colores específicos por página */
+.page-precios header { background-color: var(--pastel-blue-bg); }
+.page-precios h1 { color: var(--pastel-blue-text); }
+.page-fichas header { background-color: var(--pastel-red-bg); }
+.page-fichas h1 { color: var(--pastel-red-text); }
+.page-garantias header { background-color: var(--pastel-green-bg); }
+.page-garantias h1 { color: var(--pastel-green-text); }
+.page-tarifas header { background-color: var(--pastel-orange-bg); }
+.page-tarifas h1 { color: var(--pastel-orange-text); }
+.page-alta-cliente header { background-color: var(--pastel-pink-bg); }
+.page-alta-cliente h1 { color: var(--pastel-pink-text); }
+
+/* --- MENÚ PRINCIPAL --- */
+.menu-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+@media (min-width: 600px) {
+    .menu-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+}
+
+.menu-card {
+    background: var(--card-background);
+    padding: 1.5rem;
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--text-color);
+    border: 1px solid transparent;
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+    transition: transform .25s ease,box-shadow .25s ease;
+}
+.menu-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,.12);
+}
+.menu-card h2 { margin: 0 0 .75rem 0; font-size: 1.2rem; display: flex; align-items: center; }
+.menu-card p { margin: 0; color: var(--subtle-text); font-size: .9rem; line-height: 1.5; }
+
+/* Iconos del menú */
+.menu-card h2::before { display: inline-block; font-size: 1.5rem; margin-right: .75rem; width: 30px; }
+.card-1 h2::before { content:'🔍'; }
+.card-2 h2::before { content:'🛡️'; }
+.card-3 h2::before { content:'📥'; }
+.card-5 h2::before { content:'📄'; }
+.card-6 h2::before { content:'📖'; }
+.card-7 h2::before { content:'✍️'; }
+
+/* Colores de tarjetas del menú */
+.menu-card.card-1 { background-color: var(--pastel-blue-bg); } .menu-card.card-1 h2, .menu-card.card-1 p { color: var(--pastel-blue-text); }
+.menu-card.card-2 { background-color: var(--pastel-green-bg); } .menu-card.card-2 h2, .menu-card.card-2 p { color: var(--pastel-green-text); }
+.menu-card.card-3 { background-color: var(--pastel-orange-bg); } .menu-card.card-3 h2, .menu-card.card-3 p { color: var(--pastel-orange-text); }
+.menu-card.card-5 { background-color: var(--pastel-red-bg); } .menu-card.card-5 h2, .menu-card.card-5 p { color: var(--pastel-red-text); }
+.menu-card.card-6 { background-color: var(--pastel-cyan-bg); } .menu-card.card-6 h2, .menu-card.card-6 p { color: var(--pastel-cyan-text); }
+.menu-card.card-7 { background-color: var(--pastel-pink-bg); } .menu-card.card-7 h2, .menu-card.card-7 p { color: var(--pastel-pink-text); }
+
+/* --- BUSCADOR Y FILTROS --- */
+#search-wrapper { margin-bottom: 1.5rem; }
+.tariff-selector-wrapper label { font-weight: 500; color: var(--subtle-text); display: block; margin-bottom: 0.5rem; }
+#tariffSelector, #searchInput {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+#searchInput {
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+#searchInput:focus, #tariffSelector:focus { outline: none; border-color: var(--primary-color); }
+
+/* Disclaimer Stock */
+.stock-disclaimer {
+    font-size: 0.85rem;
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ffeeba;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* --- TARJETAS DE PRODUCTO --- */
+.product-card-single {
+    background: var(--card-background);
+    margin-bottom: 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,.05);
+    padding: 1.5rem;
+    transition: box-shadow 0.2s;
+}
+.product-card-single:hover { box-shadow: 0 5px 12px rgba(0,0,0,0.1); }
+
+/* Cabecera de tarjeta (Título + Stock) */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+@media (max-width: 500px) {
+    .card-header { flex-direction: column; }
+}
+
+.product-card-single h2 { margin: 0 0 5px 0; font-size: 1.1rem; font-weight: 600; line-height: 1.4; }
+.ref-text { margin: 0; color: var(--subtle-text); font-size: 0.85rem; }
+
+/* Badges de Stock */
+.stock-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.stock-badge .icon { margin-right: 5px; font-size: 1.1em; }
+.stock-ok { background-color: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; }
+.stock-ko { background-color: #ffebee; color: #b71c1c; border: 1px solid #ffcdd2; }
+.stock-fab { background-color: #e3f2fd; color: #0d47a1; border: 1px solid #bbdefb; white-space: normal; text-align: right; font-size: 0.75rem; }
+
+/* Grid de Precios */
+.price-details-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+}
+.price-line {
+    display: flex; justify-content: space-between; margin: 0;
+    border-bottom: 1px solid #eee; padding-bottom: 4px;
+}
+.price-line:last-child { border-bottom: none; padding-bottom: 0; }
+.final-price { color: #198754; font-weight: bold; font-size: 1.1rem; }
+.neto-price { color: #0d6efd; }
+
+/* --- CONTROLES DE AÑADIR (Input + Botón) --- */
+.add-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+.qty-input {
+    width: 60px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+.add-budget-btn {
+    flex-grow: 1;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+.add-budget-btn:hover { background-color: #0056b3; }
+.add-budget-btn:active { transform: scale(0.98); }
+
+/* --- BOTÓN FLOTANTE (FAB) --- */
+.budget-fab {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background-color: #28a745;
+    color: white;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.2s;
+}
+.budget-fab:hover { transform: scale(1.1); }
+.budget-fab span {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #dc3545;
+    color: white;
+    font-size: 0.8rem;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border: 2px solid white;
+}
+
+/* --- MODAL PRESUPUESTO --- */
+.modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(3px);
+}
+.modal.hidden { display: none; }
+.modal-content {
+    background-color: white;
+    padding: 25px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+}
+.close-modal {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #aaa;
+    line-height: 0.8;
+}
+.modal-content h2 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+
+/* Lista de ítems en modal */
+#budget-items-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+.budget-item {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 12px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.budget-item-info { font-size: 0.9rem; padding-right: 10px; }
+.budget-item-price { font-weight: bold; color: #333; font-size: 1rem; margin-top: 4px; }
+.remove-btn {
+    background: none; border: none; cursor: pointer; color: #dc3545; 
+    margin-left: 10px; font-size: 1.4rem; line-height: 1; padding: 0 5px;
+}
+
+/* Footer del Modal */
+.budget-footer {
+    border-top: 2px solid #eee;
+    padding-top: 15px;
+    background-color: #f9f9f9;
+    margin: 0 -25px -25px -25px; /* Para que ocupe todo el ancho */
+    padding: 20px 25px;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+.budget-total-line {
+    display: flex; justify-content: space-between;
+    font-size: 1.4rem; font-weight: bold; color: #333;
+    margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px;
+}
+
+/* Botones de acción modal */
+.budget-actions { display: flex; gap: 10px; margin-top: 15px; }
+.btn-success, .btn-danger {
+    flex: 1; padding: 12px; border: none; border-radius: 8px;
+    color: white; font-weight: 600; cursor: pointer; font-size: 1rem;
+}
+.btn-success { background-color: #28a745; }
+.btn-success:hover { background-color: #218838; }
+.btn-danger { background-color: #dc3545; }
+.btn-danger:hover { background-color: #c82333; }
+
+/* --- GENERAL --- */
+.empty-msg { text-align: center; color: #999; font-style: italic; padding: 20px; }
+.site-footer { text-align: center; margin-top: 3rem; color: var(--subtle-text); padding-bottom: 80px; }
+.download-button {
+    display: block; width: 100%; text-decoration: none; text-align: center;
+    padding: 12px; border-radius: 8px; margin-top: 1rem; font-weight: 500;
+    border: none; font-size: 1rem; cursor: pointer; color: white;
+}
+.download-button.excel { background-color: #1D6F42; }
+.download-button.pdf { background-color: #B30B00; }
+.back-link { display: inline-block; margin-top: 1.5rem; color: var(--primary-color); text-decoration: none; font-weight: 500; }
+/* --- ESTILOS ESPECÍFICOS: GARANTÍAS Y ENVIAR ALTA --- */
+
+/* Contenedor principal de texto (La tarjeta blanca) */
+.content-box {
+    background: var(--card-background);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    margin-bottom: 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content-box h2 {
+    margin-top: 0;
+    color: var(--text-color);
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.content-box p {
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 1.5rem;
+}
+
+/* Caja del enlace (Input + Botón) */
+.link-box {
+    display: flex;
+    gap: 10px;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px dashed #ccc;
+    align-items: center;
+}
+
+/* Input del enlace (URL) */
+.link-box input {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-family: 'Courier New', monospace; /* Fuente tipo código */
+    font-size: 0.95rem;
+    color: #333;
+    background-color: white;
+    outline: none;
+}
+
+/* Botón de copiar */
+.link-box button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    white-space: nowrap; /* Evita que el texto se parta en móviles */
+}
+
+.link-box button:hover {
+    background-color: #0056b3;
+}
+
+.link-box button:active {
+    transform: scale(0.98);
+}
+
+/* Mensaje de "Copiado" */
+#copy-feedback {
+    text-align: center;
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 1rem;
+    border: 1px solid #c3e6cb;
+    font-weight: 500;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+#copy-feedback.feedback-hidden {
+    opacity: 0;
+    display: none;
+}
+
+/* Ajuste para móviles */
+@media (max-width: 600px) {
+    .link-box {
+        flex-direction: column; /* Uno debajo del otro en móvil */
+        align-items: stretch;
+    }
+    
+    .link-box button {
+        width: 100%;
+    }
+}
+/* Estilo para el botón de PDF en el presupuesto */
+.btn-primary {
+    background-color: #007aff; /* Azul corporativo */
+    color: white;
+    flex: 1; 
+    padding: 12px; 
+    border: none; 
+    border-radius: 8px;
+    font-weight: 600; 
+    cursor: pointer; 
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+}
