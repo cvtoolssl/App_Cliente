@@ -868,3 +868,61 @@ h1 { font-size: 2.2rem; font-weight: 600; margin: 0; color: #333; }
 .btn-download-card span {
     font-size: 1.2em; /* Icono un poco más grande */
 }
+/* =========================================
+   ESTILOS PARA BOTONES DE DESCARGA (INDEX)
+   ========================================= */
+
+/* Contenedor para separar los botones */
+.download-links-wrapper {
+    display: flex;
+    flex-direction: column; /* Uno debajo del otro */
+    gap: 15px;              /* Espacio entre ellos */
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* ESTILO DEL BOTÓN (Transforma el enlace en botón) */
+a.btn-download-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    
+    /* Tamaño y relleno */
+    width: 100%;
+    padding: 15px 20px;
+    box-sizing: border-box; /* Evita que se salga de la tarjeta */
+    
+    /* COLORES: Fondo blanco para que resalte sobre cualquier tarjeta */
+    background-color: #ffffff;
+    color: #0056b3; /* Azul oscuro legible */
+    border: 2px solid #0056b3; /* Borde sólido */
+    
+    /* TIPOGRAFÍA: Quita el subrayado feo */
+    text-decoration: none !important; 
+    font-weight: 800; /* Letra gruesa */
+    font-size: 16px;
+    text-transform: uppercase; /* Opcional: mayúsculas para más fuerza */
+    letter-spacing: 0.5px;
+    
+    /* FORMA */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Sombra para dar relieve */
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+/* EFECTO AL PASAR EL RATÓN (Hover) */
+a.btn-download-card:hover {
+    background-color: #0056b3; /* Se vuelve azul */
+    color: #ffffff;            /* Texto blanco */
+    transform: translateY(-3px); /* Se eleva un poco */
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    border-color: #004494;
+}
+
+/* Ajuste del icono dentro del botón */
+a.btn-download-card span {
+    font-size: 1.3em;
+    line-height: 1;
+}
