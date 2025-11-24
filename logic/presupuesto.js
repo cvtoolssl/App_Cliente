@@ -1,14 +1,19 @@
 // logic/presupuesto.js
 
 // === CONFIGURACIÓN ===
-// Asegúrate de que este enlace sea correcto para que los clientes puedan descargar fichas
+// IMPORTANTE: Pon aquí la URL real de tu carpeta de fichas
 const URL_FICHAS_WEB = "https://cvtoolssl.github.io/Alta_Cliente/fichas.html"; 
-const EMAIL_PEDIDOS = "pedidos@cvtools.com"; // Vuestro correo para recibir pedidos
+const EMAIL_PEDIDOS = "pedidos@cvtools.com"; 
 
 let budget = [];
+// Elementos del DOM
 const budgetModal = document.getElementById('budget-modal');
+const marginModal = document.getElementById('margin-modal');
 const budgetCountSpan = document.getElementById('budget-count');
 const budgetItemsContainer = document.getElementById('budget-items-container');
+
+// Variable para saber qué botón pulsó (whatsapp o email)
+let pendingAction = null; 
 
 // --- AÑADIR / QUITAR ---
 function addToBudget(ref, desc, stdPrice, qty, netInfo, minQty, netPriceVal, stockText) {
@@ -33,7 +38,7 @@ function removeFromBudget(index) {
 }
 
 function clearBudget() {
-    if(confirm('¿Estás seguro de vaciar todo?')) {
+    if(confirm('¿Borrar todo el carrito?')) {
         budget = [];
         updateBudgetUI();
         toggleBudgetModal();
@@ -42,14 +47,14 @@ function clearBudget() {
 
 // --- CÁLCULOS ---
 function calculateItemCost(item) {
-    // Usa precio neto si supera la cantidad mínima
+    // Si cumple condiciones de neto, usa neto. Si no, precio estándar.
     if (item.minQty > 0 && item.netPriceVal > 0 && item.qty >= item.minQty) {
         return { unit: item.netPriceVal, total: item.netPriceVal * item.qty, isNet: true };
     }
     return { unit: item.stdPrice, total: item.stdPrice * item.qty, isNet: false };
 }
 
-// --- INTERFAZ (UI) ---
+// --- UI ---
 function updateBudgetUI() {
     if (budgetCountSpan) budgetCountSpan.textContent = budget.length;
     
@@ -94,25 +99,47 @@ function animateFab() {
 }
 
 // ============================================================
-// 🚀 FUNCIONES DE LOS 4 BOTONES
+// 🚀 GESTIÓN DEL MARGEN (Pop-up Bonito)
 // ============================================================
 
-// AUXILIAR: Pide margen
-function getMargin() {
-    let input = prompt("Introduce el % de MARGEN para TU cliente (Ej: 20):", "0");
-    if (input === null) return null; 
-    let m = parseFloat(input);
-    return (isNaN(m) || m < 0) ? 0 : m;
+// 1. Abrir el modal de margen y recordar qué acción queríamos hacer
+function openMarginModal(action) {
+    if (budget.length === 0) return alert("El carrito está vacío.");
+    
+    pendingAction = action; // 'whatsapp' o 'email'
+    marginModal.classList.remove('hidden');
 }
 
-// AUXILIAR: Genera texto para Cliente Final
+function closeMarginModal() {
+    marginModal.classList.add('hidden');
+    pendingAction = null;
+}
+
+// 2. Confirmar y Ejecutar
+function confirmMarginAction() {
+    const input = document.getElementById('margin-input');
+    let margin = parseFloat(input.value);
+    
+    if (isNaN(margin) || margin < 0) margin = 0;
+
+    // Ejecutar la acción pendiente
+    if (pendingAction === 'whatsapp') {
+        sendClientWhatsApp(margin);
+    } else if (pendingAction === 'email') {
+        sendClientEmail(margin);
+    }
+
+    closeMarginModal();
+}
+
+// AUXILIAR: Genera texto para Cliente Final (CON ENLACE DE FICHAS)
 function generateClientText(margin) {
     let text = `📑 *PRESUPUESTO*\n📅 Fecha: ${new Date().toLocaleDateString()}\n--------------------------------\n\n`;
     let total = 0;
 
     budget.forEach(item => {
         const cost = calculateItemCost(item);
-        // Inflamos el precio con el margen
+        // Aplicar margen: Coste * (1 + margen/100)
         const pvpUnit = cost.unit * (1 + (margin / 100));
         const pvpTotal = pvpUnit * item.qty;
         total += pvpTotal;
@@ -127,39 +154,35 @@ function generateClientText(margin) {
     text += `💰 *TOTAL: ${total.toFixed(2)} €*\n`;
     text += `(Impuestos no incluidos)\n\n`;
     
-    // ENLACE FICHAS TÉCNICAS
-    text += `📥 *Descarga Fichas Técnicas aquí:*\n${URL_FICHAS_WEB}`;
+    // ✅ AQUÍ SE AÑADE EL ENLACE (Solo para cliente final)
+    text += `📥 *Descarga Fichas Técnicas y Certificados aquí:*\n${URL_FICHAS_WEB}`;
     
     return text;
 }
 
-// 1. WHATSAPP (CLIENTE)
-function sendClientWhatsApp() {
-    if (!budget.length) return alert("Carrito vacío");
-    const m = getMargin();
-    if (m === null) return;
-
-    const text = generateClientText(m);
-    
+// ACCIÓN REAL: WhatsApp
+function sendClientWhatsApp(margin) {
+    const text = generateClientText(margin);
     navigator.clipboard.writeText(text).then(() => {
-        alert("✅ Texto copiado. Pégalo en WhatsApp.");
-    }).catch(() => alert("Copiado al portapapeles."));
+        alert("✅ Presupuesto copiado. Abriendo WhatsApp...");
+        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    }).catch(() => {
+        alert("Texto copiado al portapapeles. Pégalo en WhatsApp.");
+    });
 }
 
-// 2. EMAIL (CLIENTE)
-function sendClientEmail() {
-    if (!budget.length) return alert("Carrito vacío");
-    const m = getMargin();
-    if (m === null) return;
-
-    const body = generateClientText(m);
+// ACCIÓN REAL: Email
+function sendClientEmail(margin) {
+    const body = generateClientText(margin);
     window.location.href = `mailto:?subject=Presupuesto Materiales&body=${encodeURIComponent(body)}`;
 }
 
-// 3. PEDIDO A CVTOOLS (INTERNO)
+// ============================================================
+// 🚀 PEDIDO INTERNO (A CV TOOLS) - SIN MARGEN, SIN FICHAS
+// ============================================================
 function sendOrderToCVTools() {
-    if (!budget.length) return alert("Carrito vacío");
-    if (!confirm("¿Generar correo de pedido para CVTools?")) return;
+    if (budget.length === 0) return alert("El carrito está vacío.");
+    if (!confirm("¿Enviar pedido a CVTools con tus precios de coste?")) return;
 
     let text = `HOLA CVTOOLS, SOLICITO EL SIGUIENTE MATERIAL:\n\n`;
     let total = 0;
@@ -167,11 +190,14 @@ function sendOrderToCVTools() {
     budget.forEach(item => {
         const cost = calculateItemCost(item);
         total += cost.total;
+        // Formato simple para proveedor
         text += `[${item.ref}] ${item.desc} -> ${item.qty} uds\n`;
     });
 
-    text += `\nTotal Coste Estimado: ${total.toFixed(2)} €\n`;
-    text += `\nMis datos de cliente:\n(Escribe aquí tu nombre/código)\n`;
+    text += `\nTotal Coste: ${total.toFixed(2)} €\n`;
+    text += `\nMis datos de cliente:\n(Nombre/Código Cliente)\n`;
 
-    window.location.href = `mailto:${EMAIL_PEDIDOS}?subject=PEDIDO WEB&body=${encodeURIComponent(text)}`;
+    // ❌ AQUÍ NO SE AÑADE EL ENLACE DE FICHAS
+
+    window.location.href = `mailto:${EMAIL_PEDIDOS}?subject=NUEVO PEDIDO WEB&body=${encodeURIComponent(text)}`;
 }

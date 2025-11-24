@@ -11,35 +11,33 @@ let stockMap = new Map();
 function extractMinQty(text) {
     if (!text || typeof text !== 'string') return 0;
     const match = text.toLowerCase().match(/(\d+)\s*(uds?|unid|pzs?|pza|cjs?)/);
-    if (match) return parseInt(match[1]);
-    return 0;
+    return match ? parseInt(match[1]) : 0;
 }
 
 function extractNetPrice(text) {
     if (!text || typeof text !== 'string') return 0;
     let match = text.match(/(\d+[.,]?\d*)\s*€/);
-    if (match) return parseFloat(match[1].replace(',', '.'));
-    return 0;
+    return match ? parseFloat(match[1].replace(',', '.')) : 0;
 }
 
-// --- CARGA DE DATOS ---
+// --- CARGA ---
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        // 1. Stock
-        const stockRes = await fetch(`src/Stock.json?v=${Date.now()}`);
+        const [stockRes, tariffRes] = await Promise.all([
+            fetch(`src/Stock.json?v=${Date.now()}`),
+            fetch(`src/${TARIFF_FILE}?v=${Date.now()}`)
+        ]);
+
         const stockData = await stockRes.json();
-        (stockData.Stock || []).forEach(item => stockMap.set(String(item.Artículo), item));
+        (stockData.Stock || []).forEach(i => stockMap.set(String(i.Artículo), i));
 
-        // 2. Tarifa
-        const tariffRes = await fetch(`src/${TARIFF_FILE}?v=${Date.now()}`);
         const tariffData = await tariffRes.json();
-        const sheetName = Object.keys(tariffData)[0];
-        allProducts = tariffData[sheetName];
+        const sheet = Object.keys(tariffData)[0];
+        allProducts = tariffData[sheet];
 
-        console.log("Datos cargados.");
+        console.log("Sistema listo.");
     } catch (error) {
-        resultsContainer.innerHTML = '<p>Error cargando datos.</p>';
-        console.error(error);
+        resultsContainer.innerHTML = '<p style="text-align:center; color:red;">Error cargando datos.</p>';
     }
 });
 
@@ -54,14 +52,14 @@ searchInput.addEventListener('input', () => {
     const filtered = allProducts.filter(p => {
         const desc = p.Descripcion ? p.Descripcion.toLowerCase() : '';
         const ref = p.Referencia ? String(p.Referencia).toLowerCase() : '';
-        const stockInfo = stockMap.get(String(p.Referencia));
-        if (stockInfo && stockInfo.Estado === 'no') return false;
+        const stock = stockMap.get(String(p.Referencia));
+        if (stock && stock.Estado === 'no') return false;
         return desc.includes(query) || ref.includes(query);
     });
     displayResults(filtered);
 });
 
-// --- RENDERIZADO ---
+// --- RENDER ---
 function displayResults(products) {
     if (!products.length) {
         resultsContainer.innerHTML = '<p style="text-align:center">No hay resultados.</p>';
@@ -70,11 +68,9 @@ function displayResults(products) {
 
     let html = '';
     products.forEach((p, idx) => {
-        // Precios
-        let precioNum = p.PRECIO_ESTANDAR || 0;
-        let netoTxt = p.NETOS_GRANDE_CUENTAS ? p.CONDICION_NETO_GC : 'No aplica';
+        const precio = p.PRECIO_ESTANDAR || 0;
+        const netoTxt = p.NETOS_GRANDE_CUENTAS ? p.CONDICION_NETO_GC : 'No aplica';
         
-        // Stock
         const sInfo = stockMap.get(String(p.Referencia));
         let sHtml = '', sTxt = 'Consultar';
         if (sInfo) {
@@ -87,7 +83,7 @@ function displayResults(products) {
             }
         }
 
-        // Datos seguros
+        // Sanitizar comillas para evitar bugs en el HTML
         const safeRef = String(p.Referencia).replace(/["']/g, "");
         const safeDesc = String(p.Descripcion).replace(/["']/g, "");
         const safeNeto = String(netoTxt).replace(/["']/g, "");
@@ -103,13 +99,13 @@ function displayResults(products) {
                     ${sHtml}
                 </div>
                 <div class="price-details-grid">
-                    <p class="price-line"><strong>Precio:</strong> <span class="final-price">${precioNum.toFixed(2)} €</span></p>
+                    <p class="price-line"><strong>Precio:</strong> <span class="final-price">${precio.toFixed(2)} €</span></p>
                     <p class="price-line"><strong>Neto Esp:</strong> <span class="neto-price">${netoTxt}</span></p>
                 </div>
                 <div class="add-controls">
                     <input type="number" id="${qtyId}" class="qty-input" value="1" min="1">
                     <button class="add-budget-btn" 
-                        onclick="addToBudget('${safeRef}', '${safeDesc}', ${precioNum}, document.getElementById('${qtyId}').value, '${safeNeto}', ${minQty}, ${netVal}, '${safeStock}')">
+                        onclick="addToBudget('${safeRef}', '${safeDesc}', ${precio}, document.getElementById('${qtyId}').value, '${safeNeto}', ${minQty}, ${netVal}, '${safeStock}')">
                         + Añadir
                     </button>
                 </div>

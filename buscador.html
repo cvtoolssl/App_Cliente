@@ -16,56 +16,53 @@
 
         <main>
             <div id="search-wrapper">
-                 <input type="text" id="searchInput" placeholder="Buscar por referencia o descripción...">
-                 <p class="stock-disclaimer">ℹ️ Stock actualizado diariamente a las 09:00 AM.</p>
+                 <input type="text" id="searchInput" placeholder="Buscar referencia...">
+                 <p class="stock-disclaimer">ℹ️ Stock actualizado a las 09:00 AM.</p>
             </div>
 
-            <!-- Aquí se pintan los productos con JS -->
+            <!-- RESULTADOS -->
             <div id="resultsContainer"></div>
             
             <a href="index.html" class="back-link">← Volver al menú</a>
         </main>
     </div>
 
-    <!-- BOTÓN FLOTANTE (CARRITO) -->
+    <!-- BOTÓN FLOTANTE -->
     <div id="budget-fab" class="budget-fab" onclick="toggleBudgetModal()">
         🛒 <span id="budget-count">0</span>
     </div>
 
-    <!-- VENTANA MODAL DEL PRESUPUESTO -->
+    <!-- 1. MODAL PRINCIPAL: EL CARRITO -->
     <div id="budget-modal" class="modal hidden">
         <div class="modal-content">
             <span class="close-modal" onclick="toggleBudgetModal()">&times;</span>
-            <h2>Tu Pedido / Presupuesto</h2>
+            <h2>Resumen del Pedido</h2>
             
-            <!-- Lista de productos añadidos -->
             <div id="budget-items-container">
                 <p class="empty-msg">El carrito está vacío.</p>
             </div>
             
-            <!-- Pie del presupuesto -->
             <div class="budget-footer">
                 <p class="total-display">Total Coste (Neto): <span id="budget-total">0.00</span> €</p>
                 
-                <!-- LOS 4 BOTONES SOLICITADOS -->
                 <div class="budget-actions">
-                    <!-- b. WhatsApp a Cliente Final -->
-                    <button onclick="sendClientWhatsApp()" class="btn-whatsapp">
-                        📲 1. WhatsApp a Cliente
+                    <!-- b. WhatsApp Cliente -->
+                    <button onclick="openMarginModal('whatsapp')" class="btn-whatsapp">
+                        📲 Enviar a Cliente por WhatsApp<br><span style="font-size:0.8em; opacity:0.9">(Especificar Margen)</span>
                     </button>
 
-                    <!-- c. Correo a Cliente Final -->
-                    <button onclick="sendClientEmail()" class="btn-email">
-                        📧 2. Correo a Cliente
+                    <!-- c. Correo Cliente -->
+                    <button onclick="openMarginModal('email')" class="btn-email">
+                        📧 Enviar a Cliente por Correo<br><span style="font-size:0.8em; opacity:0.9">(Especificar Margen)</span>
                     </button>
 
                     <!-- d. Pedido a CVTools -->
                     <button onclick="sendOrderToCVTools()" class="btn-order">
-                        🏭 3. Enviar Pedido a CVTools
+                        🏭 Enviar Pedido a CVTools
                     </button>
 
                     <!-- a. Borrar -->
-                    <button onclick="clearBudget()" class="btn-danger">
+                    <button onclick="clearBudget()" class="btn-danger btn-danger-full">
                         🗑️ Borrar Todo
                     </button>
                 </div>
@@ -73,7 +70,23 @@
         </div>
     </div>
 
-    <!-- Lógica -->
+    <!-- 2. NUEVO MODAL: SOLO PARA EL MARGEN (Más bonito) -->
+    <div id="margin-modal" class="modal hidden">
+        <div class="margin-modal-content">
+            <span class="close-modal" onclick="closeMarginModal()">&times;</span>
+            <h3>Margen Comercial</h3>
+            <p style="color:#666; font-size:0.9rem;">¿Qué % de beneficio quieres aplicar?</p>
+            
+            <div class="margin-input-wrapper">
+                <input type="number" id="margin-input" class="margin-input" value="30" min="0">
+                <span style="font-size:1.2rem; font-weight:bold;">%</span>
+            </div>
+
+            <button onclick="confirmMarginAction()" class="btn-confirm">Generar y Enviar</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="logic/presupuesto.js"></script>
     <script src="logic/script.js"></script>
 </body>

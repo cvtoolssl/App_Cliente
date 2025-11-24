@@ -600,3 +600,117 @@ h1 { font-size: 2.2rem; font-weight: 600; margin: 0; color: #333; }
 .btn-email    { background-color: #f0ad4e; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
 .btn-order    { background-color: #007aff; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
 .btn-danger   { background-color: #dc3545; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+/* --- ESTILOS ESPECÍFICOS PARA CLIENTE Y MÓVIL --- */
+
+/* CORRECCIÓN RESPONSIVA: Evita el scroll lateral */
+.product-card-single, 
+.tech-sheet-card {
+    box-sizing: border-box; /* IMPRESCINDIBLE */
+    width: 100%;
+    max-width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Botón Ficha Técnica (Optimizado Móvil) */
+.tech-sheet-button {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 10px; /* Padding seguro */
+    background-color: transparent;
+    border: 2px solid #007aff;
+    color: #007aff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem; /* Letra legible en móvil */
+    margin-top: 15px;
+    transition: all 0.2s ease;
+    word-break: break-word; /* Evita desbordamiento de texto largo */
+}
+
+.tech-sheet-button:active {
+    transform: scale(0.98);
+}
+
+.tech-sheet-button svg {
+    flex-shrink: 0; /* El icono no se aplasta */
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+/* GRID DE BOTONES DEL PRESUPUESTO */
+.budget-actions {
+    display: grid;
+    grid-template-columns: 1fr; /* Móvil: 1 columna */
+    gap: 12px;
+    margin-top: 20px;
+}
+
+@media (min-width: 600px) {
+    .budget-actions {
+        grid-template-columns: 1fr 1fr; /* PC: 2 columnas */
+    }
+    /* El botón borrar ocupa todo el ancho abajo */
+    .btn-danger-full {
+        grid-column: 1 / -1;
+    }
+}
+
+/* COLORES DE BOTONES */
+.btn-whatsapp { background-color: #25D366; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.95rem;}
+.btn-email    { background-color: #f0ad4e; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.95rem;}
+.btn-order    { background-color: #007aff; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.95rem;}
+.btn-danger   { background-color: #dc3545; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.95rem;}
+
+/* MODAL DE MARGEN (NUEVO DISEÑO PEQUEÑO) */
+.margin-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 25px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 350px; /* Más pequeño y centrado */
+    border-radius: 12px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.margin-input-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.margin-input {
+    width: 80px;
+    padding: 10px;
+    font-size: 1.2rem;
+    text-align: center;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+}
+
+.btn-confirm {
+    background-color: #28a745;
+    color: white;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
