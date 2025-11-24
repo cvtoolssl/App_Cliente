@@ -823,3 +823,48 @@ h1 { font-size: 2.2rem; font-weight: 600; margin: 0; color: #333; }
     margin-bottom: 10px;
     text-align: left;
 }
+/* --- CORRECCIÓN BOTONES DE DESCARGA (Alto Contraste) --- */
+
+.download-links-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Nuevo estilo: Botón Sólido y Legible */
+.btn-download-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 15px;
+    box-sizing: border-box; /* Evita que se salga del ancho */
+    
+    /* COLORES DE ALTO CONTRASTE */
+    background-color: #ffffff; 
+    color: #0056b3; /* Azul oscuro fuerte para que se lea bien */
+    border: 2px solid #0056b3; /* Borde para definir el botón */
+    
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 700; /* Texto en negrita */
+    font-size: 0.95rem;
+    
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sombrita para darle volumen */
+    transition: all 0.2s ease;
+}
+
+/* Efecto al pasar el ratón: se invierten los colores */
+.btn-download-card:hover {
+    background-color: #0056b3;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.btn-download-card span {
+    font-size: 1.2em; /* Icono un poco más grande */
+}
