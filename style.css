@@ -10,7 +10,7 @@
     --subtle-text: #65676b;
     --border-color: #e4e6eb;
     
-    /* Colores Pastel para Tarjetas */
+    /* Colores Pastel */
     --pastel-blue-bg: #e3f2fd; --pastel-blue-text: #0d47a1;
     --pastel-green-bg: #e8f5e9; --pastel-green-text: #1b5e20;
     --pastel-orange-bg: #fff3e0; --pastel-orange-text: #e65100;
@@ -32,65 +32,30 @@ body {
 a { text-decoration: none; color: inherit; }
 
 /* =========================================
-   2. HEADER UNIFICADO (Todas las páginas)
+   2. HEADER
    ========================================= */
 header.main-header { 
-    text-align: center; 
-    padding: 2rem 1rem; 
-    margin-bottom: 2rem; 
-    border-radius: 16px; 
-    background-color: var(--card-background); 
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    text-align: center; padding: 2rem 1rem; margin-bottom: 2rem; 
+    border-radius: 16px; background-color: var(--card-background); 
+    border: 1px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.03);
 }
+.logo-container { display: flex; justify-content: center; align-items: center; margin-bottom: 1.5rem; width: 100%; }
+.provider-logo { width: 100%; max-width: 250px; height: auto; object-fit: contain; }
+h1 { font-size: 2rem; font-weight: 700; margin: 0; color: #2c3e50; letter-spacing: -0.5px; }
 
-/* Contenedor para centrar el logo perfectamente */
-.logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    width: 100%;
-}
-
-/* Logo controlado: Grande pero sin pasarse */
-.provider-logo { 
-    width: 100%;
-    max-width: 250px; /* Tamaño ideal para móvil y PC */
-    height: auto;
-    object-fit: contain;
-}
-
-h1 { 
-    font-size: 2rem; 
-    font-weight: 700; 
-    margin: 0; 
-    color: #2c3e50;
-    letter-spacing: -0.5px;
-}
-
-/* Color específico para headers de sub-páginas */
 .page-precios header.main-header { border-top: 5px solid var(--primary-color); }
 .page-fichas header.main-header { border-top: 5px solid #dc3545; }
 .page-garantias header.main-header { border-top: 5px solid #28a745; }
 
 /* =========================================
-   3. MENÚ PRINCIPAL (GRID)
+   3. MENÚ PRINCIPAL
    ========================================= */
-.menu-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
-}
-@media (min-width: 600px) {
-    .menu-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-}
+.menu-grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+@media (min-width: 600px) { .menu-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; } }
 
 .menu-card {
-    background: var(--card-background);
-    padding: 1.8rem;
-    border-radius: 16px;
-    border: 1px solid transparent;
+    background: var(--card-background); padding: 1.8rem;
+    border-radius: 16px; border: 1px solid transparent;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     transition: transform .25s ease, box-shadow .25s ease;
     display: flex; flex-direction: column;
@@ -105,100 +70,122 @@ h1 {
 .card-3 { background-color: var(--pastel-orange-bg); } .card-3 h2 { color: var(--pastel-orange-text); }
 .card-5 { background-color: var(--pastel-red-bg); } .card-5 h2 { color: var(--pastel-red-text); }
 
-/* =========================================
-   4. ESTILOS DE GARANTÍAS Y CONTENIDO
-   ========================================= */
-/* ESTO FALTABA: El contenedor blanco del formulario */
-.content-box {
-    background: var(--card-background);
-    padding: 2rem;
-    border-radius: 16px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    max-width: 700px; /* Ancho máximo para que no se estire */
-    margin: 0 auto 2rem auto; /* Centrado horizontal */
-}
-
-.warranty-form { display: flex; flex-direction: column; gap: 20px; }
-
-.form-group { display: flex; flex-direction: column; text-align: left; }
-.form-group label { font-weight: 600; margin-bottom: 8px; color: #333; }
-
-.form-input, .form-textarea {
-    width: 100%; padding: 12px; 
-    border: 1px solid #ccc; border-radius: 8px;
-    font-family: inherit; font-size: 1rem;
-    background-color: #fafafa;
-}
-.form-input:focus, .form-textarea:focus {
-    background-color: #fff; border-color: var(--primary-color); outline: none;
-}
-
-.upload-area {
-    background-color: #f8f9fa;
-    border: 2px dashed #cbd5e0;
-    border-radius: 10px; padding: 20px;
-    text-align: center;
-}
-
-/* =========================================
-   5. BOTONES Y UTILIDADES
-   ========================================= */
 .download-links-wrapper { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
-
 .btn-download-card {
     display: flex; align-items: center; justify-content: center; gap: 10px;
-    width: 100%; padding: 12px;
-    background-color: #fff; color: var(--primary-dark);
-    border: 2px solid var(--primary-dark);
-    border-radius: 8px; font-weight: 700;
-    transition: all 0.2s;
+    width: 100%; padding: 12px; background-color: #fff; color: var(--primary-dark);
+    border: 2px solid var(--primary-dark); border-radius: 8px; font-weight: 700; transition: all 0.2s;
 }
 .btn-download-card:hover { background-color: var(--primary-dark); color: #fff; }
 
-.download-button.pdf {
-    width: 100%; padding: 15px; border: none; border-radius: 8px;
-    background-color: #b71c1c; color: white; font-weight: bold; font-size: 1rem; cursor: pointer;
-}
-.download-button.pdf:hover { background-color: #8a1212; }
-
-/* Botón flotante presupuesto */
-.budget-fab {
-    position: fixed; bottom: 25px; right: 25px;
-    background: #28a745; color: white;
-    width: 65px; height: 65px; border-radius: 50%;
-    display: flex; justify-content: center; align-items: center;
-    font-size: 1.8rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    cursor: pointer; z-index: 1000;
-}
-
 /* =========================================
-   6. MODALES Y RESULTADOS
+   4. BUSCADOR Y TARJETAS (ESTILO NUEVO)
    ========================================= */
-/* Inputs buscador */
 #search-wrapper input {
     width: 100%; padding: 14px; font-size: 1rem;
     border: 1px solid var(--border-color); border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
-/* Tarjetas producto */
-.product-card-single, .tech-sheet-card {
-    background: var(--card-background); margin-bottom: 1rem;
-    border-radius: 12px; border: 1px solid var(--border-color); padding: 1.5rem;
-}
-.card-header { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 1rem; }
-.stock-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
-.stock-ok { background: #e8f5e9; color: #1b5e20; }
-.stock-ko { background: #ffebee; color: #b71c1c; }
+#search-wrapper input:focus { outline: none; border-color: var(--primary-color); }
+.stock-disclaimer { font-size: 0.85rem; background: #fff3cd; color: #856404; padding: 8px; border-radius: 6px; margin-top: 8px; text-align: center; }
 
-/* Footer */
+.product-card-single {
+    background: var(--card-background); margin-bottom: 1.5rem;
+    border-radius: 12px; border: 1px solid var(--border-color);
+    padding: 1.5rem; box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    display: flex; flex-direction: column;
+}
+
+.card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; margin-bottom: 1rem; }
+.header-text h2 { font-size: 1.25rem; font-weight: 700; margin: 0 0 5px 0; line-height: 1.3; color: #333; }
+.ref-text { color: var(--subtle-text); font-size: 0.9rem; font-family: monospace; }
+
+.stock-badge { padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; text-align: center; white-space: nowrap; flex-shrink: 0; }
+.stock-ok { background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; }
+.stock-ko { background: #ffebee; color: #b71c1c; border: 1px solid #ffcdd2; }
+.stock-fab { background: #e3f2fd; color: #0d47a1; border: 1px solid #b3e5fc; }
+
+/* --- BLOQUE DE PRECIOS 4 LÍNEAS --- */
+.price-box {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.price-breakdown { display: flex; flex-direction: column; gap: 5px; }
+
+/* Línea 1: PVP */
+.row-pvp { font-size: 0.9rem; color: #666; }
+
+/* Línea 2: DTO Inicial */
+.row-dto { font-size: 0.9rem; color: #dc3545; font-weight: 700; }
+
+/* Línea 3: Precio Estándar */
+.row-price {
+    font-size: 1.1rem; color: #212529; font-weight: 700;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 6px; margin-bottom: 6px; /* Línea separadora */
+}
+
+/* Línea 4: Neto Especial */
+.row-neto {
+    color: var(--primary-color);
+    display: flex; flex-direction: column; gap: 2px;
+}
+.neto-line-main { display: flex; align-items: center; gap: 8px; }
+.label-neto { font-size: 0.9rem; font-weight: 600; color: #555; }
+.val-neto { font-size: 1.3rem; font-weight: 800; }
+.cond-neto { font-size: 0.85rem; color: #666; font-style: italic; }
+
+/* Badges de descuento */
+.badge-dto {
+    background-color: #dc3545; color: white;
+    font-size: 0.75rem; padding: 2px 6px;
+    border-radius: 4px; font-weight: 700;
+}
+
+/* --- Controles --- */
+.add-controls { display: flex; gap: 10px; margin-top: auto; }
+.qty-input { width: 70px; text-align: center; border: 2px solid #ddd; border-radius: 8px; font-weight: bold; font-size: 1.1rem; padding: 8px; }
+.add-budget-btn { flex-grow: 1; background: var(--primary-color); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 1rem; transition: background 0.2s; }
+.add-budget-btn:hover { background: var(--primary-dark); }
+
+/* =========================================
+   5. BOTONES FLOTANTES Y MODALES
+   ========================================= */
+.budget-fab { position: fixed; bottom: 25px; right: 25px; background: #28a745; color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.8rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 1000; }
+#budget-count { position: absolute; top: -5px; right: -5px; background: #dc3545; font-size: 0.8rem; width: 24px; height: 24px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid white; font-weight: bold; }
+.modal.hidden { display: none; }
+.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; display: flex; justify-content: center; align-items: center; backdrop-filter: blur(2px); }
+.modal-content { background: white; padding: 20px; border-radius: 16px; width: 95%; max-width: 500px; max-height: 90vh; display: flex; flex-direction: column; }
+.budget-footer { margin-top: auto; padding-top: 15px; border-top: 1px solid #eee; }
+.total-display { font-size: 1.2rem; font-weight: bold; text-align: right; margin-bottom: 15px; }
+.budget-actions { display: grid; gap: 10px; }
+
+/* MODIFICACIÓN: Botones con subtítulo (Flex column) */
+button[class^="btn-"] { 
+    padding: 12px; border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; 
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+}
+.btn-subtitle {
+    font-size: 0.75rem; 
+    font-weight: 400; 
+    opacity: 0.9;
+}
+
+@media(min-width: 600px) { .budget-actions { grid-template-columns: 1fr 1fr; } .btn-danger-full { grid-column: 1 / -1; } }
+
+.btn-whatsapp { background: #25D366; } .btn-email { background: #f0ad4e; } .btn-order { background: var(--primary-color); } .btn-danger { background: #dc3545; }
+.btn-confirm { background: #28a745; width: 100%; margin-top: 10px; }
+.margin-modal-content { background: white; padding: 30px; border-radius: 12px; text-align: center; max-width: 300px; width: 90%; }
+.margin-input-wrapper { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 20px 0; }
+.margin-input { font-size: 1.5rem; width: 80px; text-align: center; padding: 5px; border: 2px solid #ddd; border-radius: 8px; }
+.content-box { background: var(--card-background); padding: 2rem; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 4px 12px rgba(0,0,0,0.05); max-width: 700px; margin: 0 auto 2rem auto; }
+.warranty-form { display: flex; flex-direction: column; gap: 15px; }
+.form-input, .form-textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-family: inherit; font-size: 1rem; }
+.upload-area { border: 2px dashed #ccc; padding: 20px; text-align: center; border-radius: 8px; background: #fafafa; }
+.download-button.pdf { width: 100%; padding: 15px; border: none; border-radius: 8px; background-color: #b71c1c; color: white; font-weight: bold; cursor: pointer; }
 .site-footer { text-align: center; margin-top: 3rem; color: var(--subtle-text); font-size: 0.9rem; }
 .back-link { display: inline-block; margin-top: 20px; color: var(--primary-color); font-weight: 600; }
-
-/* Modal y botones acción */
-.modal.hidden { display: none; }
-.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; display: flex; justify-content: center; align-items: center; }
-.modal-content { background: white; padding: 20px; border-radius: 16px; width: 95%; max-width: 500px; max-height: 90vh; display: flex; flex-direction: column; }
-.budget-actions { display: grid; gap: 10px; }
-@media(min-width: 600px) { .budget-actions { grid-template-columns: 1fr 1fr; } .btn-danger-full { grid-column: 1 / -1; } }
-button[class^="btn-"] { padding: 12px; border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; }
-.btn-whatsapp { background: #25D366; } .btn-email { background: #f0ad4e; } .btn-order { background: var(--primary-color); } .btn-danger { background: #dc3545; }

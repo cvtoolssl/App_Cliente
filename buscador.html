@@ -9,7 +9,7 @@
 <body class="page-precios">
     
     <div class="container">
-        <!-- HEADER CORREGIDO: Logo centrado y tamaño controlado -->
+        <!-- HEADER -->
         <header class="main-header">
             <div class="logo-container">
                 <img src="img/cvtools.png" alt="CV Tools" class="provider-logo">
@@ -35,35 +35,52 @@
         🛒 <span id="budget-count">0</span>
     </div>
 
-    <!-- MODALES (Sin cambios en lógica) -->
+    <!-- MODAL CARRITO -->
     <div id="budget-modal" class="modal hidden">
         <div class="modal-content">
             <span class="close-modal" onclick="toggleBudgetModal()" style="float:right; cursor:pointer; font-size:1.5rem;">&times;</span>
             <h2>Resumen del Pedido</h2>
             <div id="budget-items-container" style="overflow-y:auto; flex-grow:1; margin-bottom:10px;"><p class="empty-msg">Vacío.</p></div>
             <div class="budget-footer">
-                <p class="total-display">Total: <span id="budget-total">0.00</span> €</p>
+                <p class="total-display">Total Coste (Neto): <span id="budget-total">0.00</span> €</p>
                 <div class="budget-actions">
-                    <button onclick="openMarginModal('whatsapp')" class="btn-whatsapp">📲 WhatsApp</button>
-                    <button onclick="openMarginModal('email')" class="btn-email">📧 Correo</button>
-                    <button onclick="sendOrderToCVTools()" class="btn-order">🏭 Pedido CVTools</button>
-                    <button onclick="clearBudget()" class="btn-danger btn-danger-full">🗑️ Borrar</button>
+                    <!-- BOTONES CORREGIDOS CON SUBTÍTULO -->
+                    <button onclick="openMarginModal('whatsapp')" class="btn-whatsapp">
+                        <span>📲 WhatsApp</span>
+                        <span class="btn-subtitle">con presupuesto a cliente (indicar margen)</span>
+                    </button>
+                    
+                    <button onclick="openMarginModal('email')" class="btn-email">
+                        <span>📧 Correo</span>
+                        <span class="btn-subtitle">con presupuesto a cliente (indicar margen)</span>
+                    </button>
+                    
+                    <button onclick="sendOrderToCVTools()" class="btn-order">
+                        <span>🏭 Pedido CVTools</span>
+                    </button>
+                    
+                    <button onclick="clearBudget()" class="btn-danger btn-danger-full">
+                        <span>🗑️ Borrar Todo</span>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- MODAL MARGEN -->
     <div id="margin-modal" class="modal hidden">
-        <div class="margin-modal-content" style="background:white; padding:20px; border-radius:10px; text-align:center;">
+        <div class="margin-modal-content">
             <span class="close-modal" onclick="closeMarginModal()" style="float:right; cursor:pointer;">&times;</span>
             <h3>Margen Comercial</h3>
             <div class="margin-input-wrapper">
-                <input type="number" id="margin-input" value="30" style="width:60px; font-size:1.2rem; text-align:center;"> %
+                <input type="number" id="margin-input" class="margin-input" value="30" min="0">
+                <span style="font-size:1.2rem; font-weight:bold;">%</span>
             </div>
-            <button onclick="confirmMarginAction()" style="background:#28a745; color:white; padding:10px; width:100%; border:none; border-radius:5px; margin-top:10px;">Confirmar</button>
+            <button onclick="confirmMarginAction()" class="btn-confirm">Generar y Enviar</button>
         </div>
     </div>
 
+    <!-- SCRIPTS -->
     <script src="logic/presupuesto.js"></script>
     <script src="logic/script.js"></script>
 </body>
