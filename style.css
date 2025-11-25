@@ -96,6 +96,32 @@ h1 { font-size: 2rem; font-weight: 700; margin: 0; color: #2c3e50; letter-spacin
     display: flex; flex-direction: column;
 }
 
+/* --- ESTILOS NUEVOS PARA LA IMAGEN DEL PRODUCTO --- */
+.product-image-container {
+    width: 100%;
+    height: 200px; /* Altura fija para uniformidad */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.product-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Asegura que se vea la foto entera */
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.product-img:hover {
+    transform: scale(1.05); /* Zoom suave al pasar el ratón */
+}
+
+/* Cabecera y textos */
 .card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; margin-bottom: 1rem; }
 .header-text h2 { font-size: 1.25rem; font-weight: 700; margin: 0 0 5px 0; line-height: 1.3; color: #333; }
 .ref-text { color: var(--subtle-text); font-size: 0.9rem; font-family: monospace; }
@@ -158,47 +184,17 @@ button[class^="btn-"] { padding: 12px; border: none; border-radius: 8px; color: 
 .download-button.pdf { width: 100%; padding: 15px; border: none; border-radius: 8px; background-color: #b71c1c; color: white; font-weight: bold; cursor: pointer; }
 
 /* =========================================
-   6. FOOTER Y CONTACTO (NUEVO)
+   6. FOOTER Y CONTACTO
    ========================================= */
 .site-footer { text-align: center; margin-top: 3rem; color: var(--subtle-text); font-size: 0.9rem; }
 .back-link { display: inline-block; margin-top: 20px; color: var(--primary-color); font-weight: 600; }
 
-/* Disclaimer Colaborativo */
-.collaboration-note {
-    background-color: #fff8e1; /* Fondo amarillo suave */
-    border: 1px solid #ffe082;
-    padding: 20px;
-    border-radius: 12px;
-    max-width: 600px;
-    margin: 0 auto 20px auto;
-    text-align: center;
-}
+.collaboration-note { background-color: #fff8e1; border: 1px solid #ffe082; padding: 20px; border-radius: 12px; max-width: 600px; margin: 0 auto 20px auto; text-align: center; }
 .collaboration-note h3 { margin-top: 0; color: #f57f17; margin-bottom: 10px; }
 .collaboration-note p { margin: 0; color: #5d4037; font-size: 0.95rem; line-height: 1.5; }
 
-/* Botones flotantes (WhatsApp y Teléfono) */
-.fab-contact-container {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    display: flex;
-    flex-direction: column; /* Apilados verticalmente */
-    gap: 15px;
-    z-index: 1000;
-}
-
-.fab-contact {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    color: white;
-    text-decoration: none;
-    transition: transform 0.2s;
-}
+.fab-contact-container { position: fixed; bottom: 25px; right: 25px; display: flex; flex-direction: column; gap: 15px; z-index: 1000; }
+.fab-contact { width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); color: white; text-decoration: none; transition: transform 0.2s; }
 .fab-contact:hover { transform: scale(1.1); }
 .fab-whatsapp { background-color: #25D366; }
 .fab-phone { background-color: #007aff; }
