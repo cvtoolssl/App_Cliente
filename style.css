@@ -79,7 +79,7 @@ h1 { font-size: 2rem; font-weight: 700; margin: 0; color: #2c3e50; letter-spacin
 .btn-download-card:hover { background-color: var(--primary-dark); color: #fff; }
 
 /* =========================================
-   4. BUSCADOR Y TARJETAS (ESTILO NUEVO)
+   4. BUSCADOR Y TARJETAS
    ========================================= */
 #search-wrapper input {
     width: 100%; padding: 14px; font-size: 1rem;
@@ -113,40 +113,17 @@ h1 { font-size: 2rem; font-weight: 700; margin: 0; color: #2c3e50; letter-spacin
     padding: 15px;
     margin-bottom: 15px;
 }
-
 .price-breakdown { display: flex; flex-direction: column; gap: 5px; }
-
-/* Línea 1: PVP */
 .row-pvp { font-size: 0.9rem; color: #666; }
-
-/* Línea 2: DTO Inicial */
 .row-dto { font-size: 0.9rem; color: #dc3545; font-weight: 700; }
-
-/* Línea 3: Precio Estándar */
-.row-price {
-    font-size: 1.1rem; color: #212529; font-weight: 700;
-    border-bottom: 1px solid #dee2e6;
-    padding-bottom: 6px; margin-bottom: 6px; /* Línea separadora */
-}
-
-/* Línea 4: Neto Especial */
-.row-neto {
-    color: var(--primary-color);
-    display: flex; flex-direction: column; gap: 2px;
-}
+.row-price { font-size: 1.1rem; color: #212529; font-weight: 700; border-bottom: 1px solid #dee2e6; padding-bottom: 6px; margin-bottom: 6px; }
+.row-neto { color: var(--primary-color); display: flex; flex-direction: column; gap: 2px; }
 .neto-line-main { display: flex; align-items: center; gap: 8px; }
 .label-neto { font-size: 0.9rem; font-weight: 600; color: #555; }
 .val-neto { font-size: 1.3rem; font-weight: 800; }
 .cond-neto { font-size: 0.85rem; color: #666; font-style: italic; }
+.badge-dto { background-color: #dc3545; color: white; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
 
-/* Badges de descuento */
-.badge-dto {
-    background-color: #dc3545; color: white;
-    font-size: 0.75rem; padding: 2px 6px;
-    border-radius: 4px; font-weight: 700;
-}
-
-/* --- Controles --- */
 .add-controls { display: flex; gap: 10px; margin-top: auto; }
 .qty-input { width: 70px; text-align: center; border: 2px solid #ddd; border-radius: 8px; font-weight: bold; font-size: 1.1rem; padding: 8px; }
 .add-budget-btn { flex-grow: 1; background: var(--primary-color); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 1rem; transition: background 0.2s; }
@@ -164,16 +141,8 @@ h1 { font-size: 2rem; font-weight: 700; margin: 0; color: #2c3e50; letter-spacin
 .total-display { font-size: 1.2rem; font-weight: bold; text-align: right; margin-bottom: 15px; }
 .budget-actions { display: grid; gap: 10px; }
 
-/* MODIFICACIÓN: Botones con subtítulo (Flex column) */
-button[class^="btn-"] { 
-    padding: 12px; border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; 
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
-}
-.btn-subtitle {
-    font-size: 0.75rem; 
-    font-weight: 400; 
-    opacity: 0.9;
-}
+button[class^="btn-"] { padding: 12px; border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+.btn-subtitle { font-size: 0.75rem; font-weight: 400; opacity: 0.9; }
 
 @media(min-width: 600px) { .budget-actions { grid-template-columns: 1fr 1fr; } .btn-danger-full { grid-column: 1 / -1; } }
 
@@ -187,5 +156,49 @@ button[class^="btn-"] {
 .form-input, .form-textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-family: inherit; font-size: 1rem; }
 .upload-area { border: 2px dashed #ccc; padding: 20px; text-align: center; border-radius: 8px; background: #fafafa; }
 .download-button.pdf { width: 100%; padding: 15px; border: none; border-radius: 8px; background-color: #b71c1c; color: white; font-weight: bold; cursor: pointer; }
+
+/* =========================================
+   6. FOOTER Y CONTACTO (NUEVO)
+   ========================================= */
 .site-footer { text-align: center; margin-top: 3rem; color: var(--subtle-text); font-size: 0.9rem; }
 .back-link { display: inline-block; margin-top: 20px; color: var(--primary-color); font-weight: 600; }
+
+/* Disclaimer Colaborativo */
+.collaboration-note {
+    background-color: #fff8e1; /* Fondo amarillo suave */
+    border: 1px solid #ffe082;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+    text-align: center;
+}
+.collaboration-note h3 { margin-top: 0; color: #f57f17; margin-bottom: 10px; }
+.collaboration-note p { margin: 0; color: #5d4037; font-size: 0.95rem; line-height: 1.5; }
+
+/* Botones flotantes (WhatsApp y Teléfono) */
+.fab-contact-container {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    display: flex;
+    flex-direction: column; /* Apilados verticalmente */
+    gap: 15px;
+    z-index: 1000;
+}
+
+.fab-contact {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    color: white;
+    text-decoration: none;
+    transition: transform 0.2s;
+}
+.fab-contact:hover { transform: scale(1.1); }
+.fab-whatsapp { background-color: #25D366; }
+.fab-phone { background-color: #007aff; }
