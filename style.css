@@ -1,6 +1,9 @@
-/* --- VARIABLES GLOBALES --- */
-:root {
+/* =========================================
+   1. VARIABLES Y RESET GLOBAL
+   ========================================= */
+   :root {
     --primary-color: #007aff;
+    --primary-dark: #0056b3;
     --background-color: #f0f2f5;
     --card-background: #ffffff;
     --text-color: #1d2129;
@@ -12,49 +15,72 @@
     --pastel-green-bg: #e8f5e9; --pastel-green-text: #1b5e20;
     --pastel-orange-bg: #fff3e0; --pastel-orange-text: #e65100;
     --pastel-red-bg: #ffebee; --pastel-red-text: #b71c1c;
-    --pastel-cyan-bg: #e0f7fa; --pastel-cyan-text: #006064;
-    --pastel-pink-bg: #fce4ec; --pastel-pink-text: #880e4f;
 }
+
+*, *::before, *::after { box-sizing: border-box; }
 
 body {
     font-family: -apple-system, BlinkMacSystem-Font, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
     margin: 0;
-    padding-bottom: 80px; /* Espacio extra para que el botón flotante no tape contenido */
+    padding-bottom: 100px;
+    line-height: 1.5;
 }
 
 .container { max-width: 900px; margin: 0 auto; padding: 1rem; }
+a { text-decoration: none; color: inherit; }
 
-/* --- HEADER --- */
-header { 
+/* =========================================
+   2. HEADER UNIFICADO (Todas las páginas)
+   ========================================= */
+header.main-header { 
     text-align: center; 
-    padding: 1.5rem; 
-    margin-bottom: 2.5rem; 
+    padding: 2rem 1rem; 
+    margin-bottom: 2rem; 
     border-radius: 16px; 
     background-color: var(--card-background); 
-    border: 1px solid var(--border-color); 
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
 }
-.main-logo { max-width: 120px; margin-bottom: 1rem; }
-h1 { font-size: 2.2rem; font-weight: 600; margin: 0; color: #333; }
 
-/* Colores específicos por página */
-.page-precios header { background-color: var(--pastel-blue-bg); }
-.page-precios h1 { color: var(--pastel-blue-text); }
-.page-fichas header { background-color: var(--pastel-red-bg); }
-.page-fichas h1 { color: var(--pastel-red-text); }
-.page-garantias header { background-color: var(--pastel-green-bg); }
-.page-garantias h1 { color: var(--pastel-green-text); }
-.page-tarifas header { background-color: var(--pastel-orange-bg); }
-.page-tarifas h1 { color: var(--pastel-orange-text); }
-.page-alta-cliente header { background-color: var(--pastel-pink-bg); }
-.page-alta-cliente h1 { color: var(--pastel-pink-text); }
+/* Contenedor para centrar el logo perfectamente */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
 
-/* --- MENÚ PRINCIPAL --- */
+/* Logo controlado: Grande pero sin pasarse */
+.provider-logo { 
+    width: 100%;
+    max-width: 250px; /* Tamaño ideal para móvil y PC */
+    height: auto;
+    object-fit: contain;
+}
+
+h1 { 
+    font-size: 2rem; 
+    font-weight: 700; 
+    margin: 0; 
+    color: #2c3e50;
+    letter-spacing: -0.5px;
+}
+
+/* Color específico para headers de sub-páginas */
+.page-precios header.main-header { border-top: 5px solid var(--primary-color); }
+.page-fichas header.main-header { border-top: 5px solid #dc3545; }
+.page-garantias header.main-header { border-top: 5px solid #28a745; }
+
+/* =========================================
+   3. MENÚ PRINCIPAL (GRID)
+   ========================================= */
 .menu-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1.2rem;
 }
 @media (min-width: 600px) {
     .menu-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
@@ -62,867 +88,117 @@ h1 { font-size: 2.2rem; font-weight: 600; margin: 0; color: #333; }
 
 .menu-card {
     background: var(--card-background);
-    padding: 1.5rem;
+    padding: 1.8rem;
     border-radius: 16px;
-    text-decoration: none;
-    color: var(--text-color);
     border: 1px solid transparent;
-    box-shadow: 0 4px 12px rgba(0,0,0,.08);
-    transition: transform .25s ease,box-shadow .25s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform .25s ease, box-shadow .25s ease;
+    display: flex; flex-direction: column;
 }
-.menu-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,.12);
-}
-.menu-card h2 { margin: 0 0 .75rem 0; font-size: 1.2rem; display: flex; align-items: center; }
-.menu-card p { margin: 0; color: var(--subtle-text); font-size: .9rem; line-height: 1.5; }
+.menu-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+.menu-card h2 { margin: 0 0 .5rem 0; font-size: 1.3rem; }
+.menu-card p { color: var(--subtle-text); font-size: 0.95rem; margin-bottom: 1rem; }
 
-/* Iconos del menú */
-.menu-card h2::before { display: inline-block; font-size: 1.5rem; margin-right: .75rem; width: 30px; }
-.card-1 h2::before { content:'🔍'; }
-.card-2 h2::before { content:'🛡️'; }
-.card-3 h2::before { content:'📥'; }
-.card-5 h2::before { content:'📄'; }
-.card-6 h2::before { content:'📖'; }
-.card-7 h2::before { content:'✍️'; }
+/* Colores Tarjetas */
+.card-1 { background-color: var(--pastel-blue-bg); } .card-1 h2 { color: var(--pastel-blue-text); }
+.card-2 { background-color: var(--pastel-green-bg); } .card-2 h2 { color: var(--pastel-green-text); }
+.card-3 { background-color: var(--pastel-orange-bg); } .card-3 h2 { color: var(--pastel-orange-text); }
+.card-5 { background-color: var(--pastel-red-bg); } .card-5 h2 { color: var(--pastel-red-text); }
 
-/* Colores de tarjetas del menú */
-.menu-card.card-1 { background-color: var(--pastel-blue-bg); } .menu-card.card-1 h2, .menu-card.card-1 p { color: var(--pastel-blue-text); }
-.menu-card.card-2 { background-color: var(--pastel-green-bg); } .menu-card.card-2 h2, .menu-card.card-2 p { color: var(--pastel-green-text); }
-.menu-card.card-3 { background-color: var(--pastel-orange-bg); } .menu-card.card-3 h2, .menu-card.card-3 p { color: var(--pastel-orange-text); }
-.menu-card.card-5 { background-color: var(--pastel-red-bg); } .menu-card.card-5 h2, .menu-card.card-5 p { color: var(--pastel-red-text); }
-.menu-card.card-6 { background-color: var(--pastel-cyan-bg); } .menu-card.card-6 h2, .menu-card.card-6 p { color: var(--pastel-cyan-text); }
-.menu-card.card-7 { background-color: var(--pastel-pink-bg); } .menu-card.card-7 h2, .menu-card.card-7 p { color: var(--pastel-pink-text); }
-
-/* --- BUSCADOR Y FILTROS --- */
-#search-wrapper { margin-bottom: 1.5rem; }
-.tariff-selector-wrapper label { font-weight: 500; color: var(--subtle-text); display: block; margin-bottom: 0.5rem; }
-#tariffSelector, #searchInput {
-    width: 100%;
-    padding: 12px;
-    font-size: 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-}
-#searchInput {
-    border-radius: 12px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-#searchInput:focus, #tariffSelector:focus { outline: none; border-color: var(--primary-color); }
-
-/* Disclaimer Stock */
-.stock-disclaimer {
-    font-size: 0.85rem;
-    background-color: #fff3cd;
-    color: #856404;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ffeeba;
-    margin-top: 5px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-/* --- TARJETAS DE PRODUCTO --- */
-.product-card-single {
-    background: var(--card-background);
-    margin-bottom: 1rem;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 2px 4px rgba(0,0,0,.05);
-    padding: 1.5rem;
-    transition: box-shadow 0.2s;
-}
-.product-card-single:hover { box-shadow: 0 5px 12px rgba(0,0,0,0.1); }
-
-/* Cabecera de tarjeta (Título + Stock) */
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-    gap: 1rem;
-}
-@media (max-width: 500px) {
-    .card-header { flex-direction: column; }
-}
-
-.product-card-single h2 { margin: 0 0 5px 0; font-size: 1.1rem; font-weight: 600; line-height: 1.4; }
-.ref-text { margin: 0; color: var(--subtle-text); font-size: 0.85rem; }
-
-/* Badges de Stock */
-.stock-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-.stock-badge .icon { margin-right: 5px; font-size: 1.1em; }
-.stock-ok { background-color: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; }
-.stock-ko { background-color: #ffebee; color: #b71c1c; border: 1px solid #ffcdd2; }
-.stock-fab { background-color: #e3f2fd; color: #0d47a1; border: 1px solid #bbdefb; white-space: normal; text-align: right; font-size: 0.75rem; }
-
-/* Grid de Precios */
-.price-details-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    background-color: #f8f9fa;
-    padding: 10px;
-    border-radius: 8px;
-}
-.price-line {
-    display: flex; justify-content: space-between; margin: 0;
-    border-bottom: 1px solid #eee; padding-bottom: 4px;
-}
-.price-line:last-child { border-bottom: none; padding-bottom: 0; }
-.final-price { color: #198754; font-weight: bold; font-size: 1.1rem; }
-.neto-price { color: #0d6efd; }
-
-/* --- CONTROLES DE AÑADIR (Input + Botón) --- */
-.add-controls {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-}
-.qty-input {
-    width: 60px;
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
-}
-.add-budget-btn {
-    flex-grow: 1;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: background-color 0.2s;
-}
-.add-budget-btn:hover { background-color: #0056b3; }
-.add-budget-btn:active { transform: scale(0.98); }
-
-/* --- BOTÓN FLOTANTE (FAB) --- */
-.budget-fab {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    background-color: #28a745;
-    color: white;
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.8rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    cursor: pointer;
-    z-index: 1000;
-    transition: transform 0.2s;
-}
-.budget-fab:hover { transform: scale(1.1); }
-.budget-fab span {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: #dc3545;
-    color: white;
-    font-size: 0.8rem;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    border: 2px solid white;
-}
-
-/* --- MODAL PRESUPUESTO --- */
-.modal {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.6);
-    z-index: 2000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(3px);
-}
-.modal.hidden { display: none; }
-.modal-content {
-    background-color: white;
-    padding: 25px;
-    border-radius: 16px;
-    width: 90%;
-    max-width: 500px;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    display: flex;
-    flex-direction: column;
-}
-.close-modal {
-    position: absolute;
-    top: 15px; right: 20px;
-    font-size: 2rem;
-    cursor: pointer;
-    color: #aaa;
-    line-height: 0.8;
-}
-.modal-content h2 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-
-/* Lista de ítems en modal */
-#budget-items-container {
-    flex-grow: 1;
-    overflow-y: auto;
-    margin-bottom: 15px;
-}
-.budget-item {
-    border-bottom: 1px solid #f0f0f0;
-    padding: 12px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.budget-item-info { font-size: 0.9rem; padding-right: 10px; }
-.budget-item-price { font-weight: bold; color: #333; font-size: 1rem; margin-top: 4px; }
-.remove-btn {
-    background: none; border: none; cursor: pointer; color: #dc3545; 
-    margin-left: 10px; font-size: 1.4rem; line-height: 1; padding: 0 5px;
-}
-
-/* Footer del Modal */
-.budget-footer {
-    border-top: 2px solid #eee;
-    padding-top: 15px;
-    background-color: #f9f9f9;
-    margin: 0 -25px -25px -25px; /* Para que ocupe todo el ancho */
-    padding: 20px 25px;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-}
-.budget-total-line {
-    display: flex; justify-content: space-between;
-    font-size: 1.4rem; font-weight: bold; color: #333;
-    margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px;
-}
-
-/* Botones de acción modal */
-.budget-actions { display: flex; gap: 10px; margin-top: 15px; }
-.btn-success, .btn-danger {
-    flex: 1; padding: 12px; border: none; border-radius: 8px;
-    color: white; font-weight: 600; cursor: pointer; font-size: 1rem;
-}
-.btn-success { background-color: #28a745; }
-.btn-success:hover { background-color: #218838; }
-.btn-danger { background-color: #dc3545; }
-.btn-danger:hover { background-color: #c82333; }
-
-/* --- GENERAL --- */
-.empty-msg { text-align: center; color: #999; font-style: italic; padding: 20px; }
-.site-footer { text-align: center; margin-top: 3rem; color: var(--subtle-text); padding-bottom: 80px; }
-.download-button {
-    display: block; width: 100%; text-decoration: none; text-align: center;
-    padding: 12px; border-radius: 8px; margin-top: 1rem; font-weight: 500;
-    border: none; font-size: 1rem; cursor: pointer; color: white;
-}
-.download-button.excel { background-color: #1D6F42; }
-.download-button.pdf { background-color: #B30B00; }
-.back-link { display: inline-block; margin-top: 1.5rem; color: var(--primary-color); text-decoration: none; font-weight: 500; }
-/* --- ESTILOS ESPECÍFICOS: GARANTÍAS Y ENVIAR ALTA --- */
-
-/* Contenedor principal de texto (La tarjeta blanca) */
+/* =========================================
+   4. ESTILOS DE GARANTÍAS Y CONTENIDO
+   ========================================= */
+/* ESTO FALTABA: El contenedor blanco del formulario */
 .content-box {
     background: var(--card-background);
     padding: 2rem;
     border-radius: 16px;
     border: 1px solid var(--border-color);
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    margin-bottom: 2rem;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 700px; /* Ancho máximo para que no se estire */
+    margin: 0 auto 2rem auto; /* Centrado horizontal */
 }
 
-.content-box h2 {
-    margin-top: 0;
-    color: var(--text-color);
-    border-bottom: 1px solid #eee;
-    padding-bottom: 1rem;
-    margin-bottom: 1.5rem;
+.warranty-form { display: flex; flex-direction: column; gap: 20px; }
+
+.form-group { display: flex; flex-direction: column; text-align: left; }
+.form-group label { font-weight: 600; margin-bottom: 8px; color: #333; }
+
+.form-input, .form-textarea {
+    width: 100%; padding: 12px; 
+    border: 1px solid #ccc; border-radius: 8px;
+    font-family: inherit; font-size: 1rem;
+    background-color: #fafafa;
+}
+.form-input:focus, .form-textarea:focus {
+    background-color: #fff; border-color: var(--primary-color); outline: none;
 }
 
-.content-box p {
-    line-height: 1.6;
-    color: #444;
-    margin-bottom: 1.5rem;
-}
-
-/* Caja del enlace (Input + Botón) */
-.link-box {
-    display: flex;
-    gap: 10px;
-    background-color: #f8f9fa;
-    padding: 15px;
-    border-radius: 12px;
-    border: 1px dashed #ccc;
-    align-items: center;
-}
-
-/* Input del enlace (URL) */
-.link-box input {
-    flex-grow: 1;
-    padding: 12px 15px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-family: 'Courier New', monospace; /* Fuente tipo código */
-    font-size: 0.95rem;
-    color: #333;
-    background-color: white;
-    outline: none;
-}
-
-/* Botón de copiar */
-.link-box button {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-    white-space: nowrap; /* Evita que el texto se parta en móviles */
-}
-
-.link-box button:hover {
-    background-color: #0056b3;
-}
-
-.link-box button:active {
-    transform: scale(0.98);
-}
-
-/* Mensaje de "Copiado" */
-#copy-feedback {
-    text-align: center;
-    background-color: #d4edda;
-    color: #155724;
-    padding: 10px;
-    border-radius: 8px;
-    margin-top: 1rem;
-    border: 1px solid #c3e6cb;
-    font-weight: 500;
-    opacity: 1;
-    transition: opacity 0.3s ease;
-}
-
-#copy-feedback.feedback-hidden {
-    opacity: 0;
-    display: none;
-}
-
-/* Ajuste para móviles */
-@media (max-width: 600px) {
-    .link-box {
-        flex-direction: column; /* Uno debajo del otro en móvil */
-        align-items: stretch;
-    }
-    
-    .link-box button {
-        width: 100%;
-    }
-}
-/* Estilo para el botón de PDF en el presupuesto */
-.btn-primary {
-    background-color: #007aff; /* Azul corporativo */
-    color: white;
-    flex: 1; 
-    padding: 12px; 
-    border: none; 
-    border-radius: 8px;
-    font-weight: 600; 
-    cursor: pointer; 
-    font-size: 1rem;
-    transition: background-color 0.2s;
-}
-.btn-primary:hover {
-    background-color: #0056b3;
-}
-/* --- ESTILOS AÑADIDOS PARA LA VERSIÓN CLIENTE --- */
-
-/* 1. Botón de Descargar Ficha Técnica (Más estético) */
-.tech-sheet-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    padding: 12px 15px;
-    background-color: transparent;
-    border: 2px solid #007aff; /* Azul corporativo */
-    color: #007aff;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    margin-top: 15px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.tech-sheet-button:hover {
-    background-color: #007aff;
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
-}
-
-.tech-sheet-button svg {
-    width: 20px;
-    height: 20px;
-    fill: currentColor; /* El icono toma el color del texto */
-}
-
-/* 2. Contenedor de Botones del Presupuesto */
-.budget-actions {
-    display: grid;
-    grid-template-columns: 1fr; /* Una columna en móviles */
-    gap: 10px;
-    margin-top: 20px;
-}
-
-/* Estilos específicos para diferenciar acciones */
-.btn-whatsapp {
-    background-color: #25D366; /* Verde WhatsApp */
-    color: white;
-    border: none; padding: 12px; border-radius: 6px; font-weight: bold;
-}
-.btn-email {
-    background-color: #ffcc00; /* Amarillo Email */
-    color: #333;
-    border: none; padding: 12px; border-radius: 6px; font-weight: bold;
-}
-.btn-order {
-    background-color: #007aff; /* Azul CVTools */
-    color: white;
-    border: none; padding: 12px; border-radius: 6px; font-weight: bold;
-}
-.btn-danger {
-    background-color: #dc3545; /* Rojo Borrar */
-    color: white;
-    border: none; padding: 12px; border-radius: 6px; font-weight: bold;
-}
-
-/* En pantallas grandes, poner botones en 2 columnas */
-@media (min-width: 600px) {
-    .budget-actions {
-        grid-template-columns: 1fr 1fr;
-    }
-    /* El botón de borrar que ocupe todo el ancho abajo o arriba */
-    .btn-danger {
-        grid-column: 1 / -1; 
-        order: 4; /* Que aparezca al final */
-    }
-}
-/* --- ESTILOS AÑADIDOS O CORREGIDOS --- */
-
-/* 1. Botón de Añadir al Presupuesto (Recuperado) */
-.add-budget-btn {
-    background-color: #007aff;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    margin-top: 10px;
-    width: 100%;
-    transition: background 0.2s;
-}
-.add-budget-btn:hover { background-color: #005bb5; }
-
-/* 2. Botón de Descargar Ficha Técnica (Estilo Outline) */
-.tech-sheet-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    padding: 10px;
-    background-color: transparent;
-    border: 2px solid #007aff;
-    color: #007aff;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    margin-top: 15px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-.tech-sheet-button:hover {
-    background-color: #007aff;
-    color: white;
-}
-.tech-sheet-button svg { width: 18px; height: 18px; fill: currentColor; }
-
-/* 3. Cuadrícula de Botones del Modal Presupuesto */
-.budget-actions {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-    margin-top: 20px;
-}
-@media (min-width: 600px) {
-    .budget-actions { grid-template-columns: 1fr 1fr; }
-    .btn-danger { grid-column: 1 / -1; order: 10; } /* El botón borrar abajo del todo */
-}
-
-/* Colores de los botones de acción */
-.btn-whatsapp { background-color: #25D366; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
-.btn-email    { background-color: #f0ad4e; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
-.btn-order    { background-color: #007aff; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
-.btn-danger   { background-color: #dc3545; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
-/* --- ESTILOS ESPECÍFICOS PARA CLIENTE Y MÓVIL --- */
-
-/* CORRECCIÓN RESPONSIVA: Evita el scroll lateral */
-.product-card-single, 
-.tech-sheet-card {
-    box-sizing: border-box; /* IMPRESCINDIBLE */
-    width: 100%;
-    max-width: 100%;
-    padding: 15px;
-    margin-bottom: 15px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-/* Botón Ficha Técnica (Optimizado Móvil) */
-.tech-sheet-button {
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 8px;
-    width: 100%;
-    padding: 12px 10px; /* Padding seguro */
-    background-color: transparent;
-    border: 2px solid #007aff;
-    color: #007aff;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem; /* Letra legible en móvil */
-    margin-top: 15px;
-    transition: all 0.2s ease;
-    word-break: break-word; /* Evita desbordamiento de texto largo */
-}
-
-.tech-sheet-button:active {
-    transform: scale(0.98);
-}
-
-.tech-sheet-button svg {
-    flex-shrink: 0; /* El icono no se aplasta */
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
-}
-
-/* GRID DE BOTONES DEL PRESUPUESTO */
-.budget-actions {
-    display: grid;
-    grid-template-columns: 1fr; /* Móvil: 1 columna */
-    gap: 12px;
-    margin-top: 20px;
-}
-
-@media (min-width: 600px) {
-    .budget-actions {
-        grid-template-columns: 1fr 1fr; /* PC: 2 columnas */
-    }
-    /* El botón borrar ocupa todo el ancho abajo */
-    .btn-danger-full {
-        grid-column: 1 / -1;
-    }
-}
-
-/* COLORES DE BOTONES */
-.btn-whatsapp { background-color: #25D366; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.95rem;}
-.btn-email    { background-color: #f0ad4e; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.95rem;}
-.btn-order    { background-color: #007aff; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.95rem;}
-.btn-danger   { background-color: #dc3545; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.95rem;}
-
-/* MODAL DE MARGEN (NUEVO DISEÑO PEQUEÑO) */
-.margin-modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 25px;
-    border: 1px solid #888;
-    width: 90%;
-    max-width: 350px; /* Más pequeño y centrado */
-    border-radius: 12px;
-    text-align: center;
-    position: relative;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-.margin-input-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin: 20px 0;
-}
-
-.margin-input {
-    width: 80px;
-    padding: 10px;
-    font-size: 1.2rem;
-    text-align: center;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-}
-
-.btn-confirm {
-    background-color: #28a745;
-    color: white;
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-}
-/* --- MEJORAS INDEX Y FORMULARIO GARANTÍAS --- */
-
-/* 1. Cabecera con Doble Logo */
-.header-logos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px; /* Espacio entre logos */
-    margin-bottom: 15px;
-    flex-wrap: wrap;
-}
-
-.client-logo {
-    height: 60px; /* Tamaño controlado */
-    object-fit: contain;
-}
-
-.provider-logo {
-    height: 45px; /* Un poco más pequeño para dar prioridad al cliente */
-    object-fit: contain;
-    opacity: 0.9;
-}
-
-/* 2. Tarjeta de Descargas (Botones internos) */
-.download-links-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.btn-download-ghost {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #fff;
-    background: rgba(255,255,255,0.2);
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: 600;
-    transition: background 0.3s;
-}
-
-.btn-download-ghost:hover {
-    background: rgba(255,255,255,0.4);
-}
-
-/* 3. FORMULARIO DE GARANTÍAS OPTIMIZADO */
-.warranty-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-}
-
-.form-group label {
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #333;
-}
-
-.form-input, 
-.form-textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px; /* Evita zoom en iPhone */
-    font-family: inherit;
-    background-color: #fff;
-    box-sizing: border-box; /* Clave para que no se salga */
-    transition: border-color 0.3s;
-}
-
-.form-input:focus, 
-.form-textarea:focus {
-    border-color: #007aff;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
-}
-
-/* Área de subida de fotos */
 .upload-area {
     background-color: #f8f9fa;
     border: 2px dashed #cbd5e0;
-    border-radius: 10px;
-    padding: 20px;
+    border-radius: 10px; padding: 20px;
     text-align: center;
 }
 
-.upload-area h4 {
-    margin-top: 0;
-    color: #555;
-    margin-bottom: 15px;
-}
-
-.file-input-wrapper {
-    margin-bottom: 10px;
-    text-align: left;
-}
-/* --- CORRECCIÓN BOTONES DE DESCARGA (Alto Contraste) --- */
-
-.download-links-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-/* Nuevo estilo: Botón Sólido y Legible */
-.btn-download-card {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    padding: 12px 15px;
-    box-sizing: border-box; /* Evita que se salga del ancho */
-    
-    /* COLORES DE ALTO CONTRASTE */
-    background-color: #ffffff; 
-    color: #0056b3; /* Azul oscuro fuerte para que se lea bien */
-    border: 2px solid #0056b3; /* Borde para definir el botón */
-    
-    border-radius: 8px;
-    text-align: center;
-    text-decoration: none;
-    font-weight: 700; /* Texto en negrita */
-    font-size: 0.95rem;
-    
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sombrita para darle volumen */
-    transition: all 0.2s ease;
-}
-
-/* Efecto al pasar el ratón: se invierten los colores */
-.btn-download-card:hover {
-    background-color: #0056b3;
-    color: #ffffff;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-}
-
-.btn-download-card span {
-    font-size: 1.2em; /* Icono un poco más grande */
-}
 /* =========================================
-   ESTILOS PARA BOTONES DE DESCARGA (INDEX)
+   5. BOTONES Y UTILIDADES
    ========================================= */
+.download-links-wrapper { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
 
-/* Contenedor para separar los botones */
-.download-links-wrapper {
-    display: flex;
-    flex-direction: column; /* Uno debajo del otro */
-    gap: 15px;              /* Espacio entre ellos */
-    margin-top: 20px;
-    width: 100%;
+.btn-download-card {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; padding: 12px;
+    background-color: #fff; color: var(--primary-dark);
+    border: 2px solid var(--primary-dark);
+    border-radius: 8px; font-weight: 700;
+    transition: all 0.2s;
+}
+.btn-download-card:hover { background-color: var(--primary-dark); color: #fff; }
+
+.download-button.pdf {
+    width: 100%; padding: 15px; border: none; border-radius: 8px;
+    background-color: #b71c1c; color: white; font-weight: bold; font-size: 1rem; cursor: pointer;
+}
+.download-button.pdf:hover { background-color: #8a1212; }
+
+/* Botón flotante presupuesto */
+.budget-fab {
+    position: fixed; bottom: 25px; right: 25px;
+    background: #28a745; color: white;
+    width: 65px; height: 65px; border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 1.8rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    cursor: pointer; z-index: 1000;
 }
 
-/* ESTILO DEL BOTÓN (Transforma el enlace en botón) */
-a.btn-download-card {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    
-    /* Tamaño y relleno */
-    width: 100%;
-    padding: 15px 20px;
-    box-sizing: border-box; /* Evita que se salga de la tarjeta */
-    
-    /* COLORES: Fondo blanco para que resalte sobre cualquier tarjeta */
-    background-color: #ffffff;
-    color: #0056b3; /* Azul oscuro legible */
-    border: 2px solid #0056b3; /* Borde sólido */
-    
-    /* TIPOGRAFÍA: Quita el subrayado feo */
-    text-decoration: none !important; 
-    font-weight: 800; /* Letra gruesa */
-    font-size: 16px;
-    text-transform: uppercase; /* Opcional: mayúsculas para más fuerza */
-    letter-spacing: 0.5px;
-    
-    /* FORMA */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Sombra para dar relieve */
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
+/* =========================================
+   6. MODALES Y RESULTADOS
+   ========================================= */
+/* Inputs buscador */
+#search-wrapper input {
+    width: 100%; padding: 14px; font-size: 1rem;
+    border: 1px solid var(--border-color); border-radius: 12px;
 }
+/* Tarjetas producto */
+.product-card-single, .tech-sheet-card {
+    background: var(--card-background); margin-bottom: 1rem;
+    border-radius: 12px; border: 1px solid var(--border-color); padding: 1.5rem;
+}
+.card-header { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 1rem; }
+.stock-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+.stock-ok { background: #e8f5e9; color: #1b5e20; }
+.stock-ko { background: #ffebee; color: #b71c1c; }
 
-/* EFECTO AL PASAR EL RATÓN (Hover) */
-a.btn-download-card:hover {
-    background-color: #0056b3; /* Se vuelve azul */
-    color: #ffffff;            /* Texto blanco */
-    transform: translateY(-3px); /* Se eleva un poco */
-    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-    border-color: #004494;
-}
+/* Footer */
+.site-footer { text-align: center; margin-top: 3rem; color: var(--subtle-text); font-size: 0.9rem; }
+.back-link { display: inline-block; margin-top: 20px; color: var(--primary-color); font-weight: 600; }
 
-/* Ajuste del icono dentro del botón */
-a.btn-download-card span {
-    font-size: 1.3em;
-    line-height: 1;
-}
+/* Modal y botones acción */
+.modal.hidden { display: none; }
+.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; display: flex; justify-content: center; align-items: center; }
+.modal-content { background: white; padding: 20px; border-radius: 16px; width: 95%; max-width: 500px; max-height: 90vh; display: flex; flex-direction: column; }
+.budget-actions { display: grid; gap: 10px; }
+@media(min-width: 600px) { .budget-actions { grid-template-columns: 1fr 1fr; } .btn-danger-full { grid-column: 1 / -1; } }
+button[class^="btn-"] { padding: 12px; border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; }
+.btn-whatsapp { background: #25D366; } .btn-email { background: #f0ad4e; } .btn-order { background: var(--primary-color); } .btn-danger { background: #dc3545; }

@@ -5,28 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Garantías</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Librería PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
-<body>
-    <!-- Logo oculto para PDF -->
-    <img id="pdf-logo" src="img/logo.png" style="display:none;" alt="Logo">
+<body class="page-garantias">
+    <!-- Logo oculto para PDF (reutilizamos el mismo archivo) -->
+    <img id="pdf-logo" src="img/cvtools.png" style="display:none;" alt="Logo">
 
     <div class="container">
-        <header>
-            <div class="header-logos">
-                <img src="img/logo.png" alt="Logo" class="client-logo">
+        <!-- HEADER CORREGIDO: Centrado y consistente -->
+        <header class="main-header">
+            <div class="logo-container">
                 <img src="img/cvtools.png" alt="CV Tools" class="provider-logo">
             </div>
             <h1>Gestión de Garantías</h1>
         </header>
 
+        <!-- AÑADIDO: 'content-box' para que tenga fondo blanco y sombra -->
         <main class="content-box">
-            <p style="margin-bottom:20px;">Rellena los datos de la incidencia. Generaremos un PDF con las imágenes adjuntas listo para enviar.</p>
+            <p style="margin-bottom:20px; color:#555;">
+                Rellena los datos de la incidencia. Generaremos un PDF con las imágenes adjuntas listo para enviar.
+            </p>
             
-            <!-- FORMULARIO ESTILIZADO -->
             <form id="warrantyForm" class="warranty-form">
-                
                 <div class="form-group">
                     <label for="ref">Referencia del Producto:</label>
                     <input type="text" id="ref" class="form-input" required placeholder="Ej: 12345-X">
@@ -42,14 +42,13 @@
                     <textarea id="reason" rows="5" class="form-textarea" required placeholder="Describe brevemente qué le ocurre al producto..."></textarea>
                 </div>
 
-                <!-- Área de fotos mejorada -->
                 <div class="upload-area">
-                    <h4>📸 Evidencias Fotográficas</h4>
-                    <div class="file-input-wrapper">
+                    <h4 style="margin-top:0;">📸 Evidencias Fotográficas</h4>
+                    <div style="margin-bottom:10px; text-align:left;">
                         <label style="font-size:0.9em; display:block; margin-bottom:5px;">Foto 1 (Producto completo):</label>
                         <input type="file" id="img1" accept="image/*" style="width:100%">
                     </div>
-                    <div class="file-input-wrapper">
+                    <div style="text-align:left;">
                         <label style="font-size:0.9em; display:block; margin-bottom:5px;">Foto 2 (Detalle del fallo):</label>
                         <input type="file" id="img2" accept="image/*" style="width:100%">
                     </div>
@@ -60,60 +59,55 @@
                 </button>
             </form>
 
-            <a href="index.html" class="back-link" style="margin-top:30px;">← Volver al menú principal</a>
+            <div style="text-align:center;">
+                <a href="index.html" class="back-link">← Volver al menú principal</a>
+            </div>
         </main>
     </div>
 
-    <!-- Script de generación de PDF -->
+    <!-- Script PDF (Sin cambios funcionales, solo estructura) -->
     <script>
         document.getElementById('warrantyForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
             const btn = document.getElementById('btn-generate');
             const originalText = btn.textContent;
-            btn.textContent = "⏳ Procesando imágenes...";
+            btn.textContent = "⏳ Procesando...";
             btn.disabled = true;
 
             try {
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF();
                 
-                // 1. Cabecera PDF
+                // Usamos el mismo logo de cvtools para el PDF
                 const logoElem = document.getElementById('pdf-logo');
-                try { doc.addImage(logoElem, 'PNG', 15, 10, 30, 10); } catch(err){}
+                try { doc.addImage(logoElem, 'PNG', 15, 10, 40, 15); } catch(err){}
 
                 doc.setFontSize(16);
                 doc.text("HOJA DE RECLAMACIÓN", 195, 20, { align: 'right' });
                 doc.setFontSize(10);
                 doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 195, 26, { align: 'right' });
 
-                // 2. Datos
                 const ref = document.getElementById('ref').value;
                 const invoice = document.getElementById('invoice').value;
                 const reason = document.getElementById('reason').value;
 
                 doc.setFont("helvetica", "bold");
-                doc.text("DATOS DE LA INCIDENCIA:", 15, 45);
+                doc.text("DATOS DE LA INCIDENCIA:", 15, 50);
                 doc.setFont("helvetica", "normal");
-                
-                doc.text(`Producto (Ref):`, 15, 55); 
-                doc.text(ref, 60, 55);
-                
-                doc.text(`Documento (Fac/Alb):`, 15, 62);
-                doc.text(invoice, 60, 62);
-                
-                doc.text("Motivo:", 15, 75);
+                doc.text(`Producto: ${ref}`, 15, 60);
+                doc.text(`Factura/Albarán: ${invoice}`, 15, 67);
+                doc.text("Motivo:", 15, 80);
                 const splitReason = doc.splitTextToSize(reason, 180); 
-                doc.text(splitReason, 15, 82);
+                doc.text(splitReason, 15, 87);
 
-                let currentY = 82 + (splitReason.length * 5) + 10;
-
-                // 3. Imágenes
+                let currentY = 87 + (splitReason.length * 5) + 10;
+                
+                // Imágenes
                 const readImage = (input) => {
                     if (input.files && input.files[0]) {
-                        return new Promise((resolve) => {
+                        return new Promise((r) => {
                             const reader = new FileReader();
-                            reader.onload = (e) => resolve(e.target.result);
+                            reader.onload = (e) => r(e.target.result);
                             reader.readAsDataURL(input.files[0]);
                         });
                     }
@@ -124,35 +118,21 @@
                 const img2Data = await readImage(document.getElementById('img2'));
 
                 if (img1Data || img2Data) {
-                    doc.line(15, currentY - 5, 195, currentY - 5);
-                    doc.setFont("helvetica", "bold");
-                    doc.text("FOTOS ADJUNTAS:", 15, currentY + 5);
-                    currentY += 15;
-
-                    // Ajuste para que quepan bien
-                    const imgWidth = 80;
-                    const imgHeight = 60;
-
+                    doc.text("FOTOS:", 15, currentY);
+                    currentY += 10;
                     if (img1Data) {
-                        doc.addImage(img1Data, 'JPEG', 15, currentY, imgWidth, imgHeight);
-                        doc.text("Foto 1", 15, currentY + imgHeight + 5);
-                        if (img2Data) {
-                            doc.addImage(img2Data, 'JPEG', 110, currentY, imgWidth, imgHeight);
-                            doc.text("Foto 2", 110, currentY + imgHeight + 5);
-                        }
+                        doc.addImage(img1Data, 'JPEG', 15, currentY, 80, 60);
+                        if (img2Data) doc.addImage(img2Data, 'JPEG', 110, currentY, 80, 60);
                     } else if (img2Data) {
-                        doc.addImage(img2Data, 'JPEG', 15, currentY, imgWidth, imgHeight);
+                        doc.addImage(img2Data, 'JPEG', 15, currentY, 80, 60);
                     }
                 }
 
-                doc.save(`Reclamacion_${ref.replace(/[^a-z0-9]/gi, '_')}.pdf`);
-                alert("✅ PDF descargado. Ahora puedes enviarlo por correo.");
-
+                doc.save(`Reclamacion_${ref}.pdf`);
             } catch (error) {
+                alert("Error al generar PDF. Intenta con imágenes más pequeñas.");
                 console.error(error);
-                alert("Hubo un error al generar el PDF. Prueba con imágenes más pequeñas.");
             }
-
             btn.textContent = originalText;
             btn.disabled = false;
         });

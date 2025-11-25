@@ -8,40 +8,30 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <!-- Cabecera con Doble Logo -->
-            <div class="header-logos">
-                <!-- Logo del Cliente (Más grande) -->
-                <img src="img/logo.png" alt="Logo Cliente" class="client-logo">
-                
-                <!-- Separador visual -->
-                <span style="font-size:20px; color:#aaa; margin: 0 10px;"> </span>
-                
-                <!-- Logo CV Tools (Proveedor) -->
+        <header class="main-header">
+            <!-- Logo CV Tools (Proveedor) - Ahora más grande -->
+            <div class="logo-container">
                 <img src="img/cvtools.png" alt="CV Tools" class="provider-logo">
             </div>
-            <h1>Portal de Gestión</h1>
+            <h1>Portal del Cliente</h1>
         </header>
 
         <main class="menu-grid">
             <!-- 1. Buscador y Pedidos -->
             <a href="buscador.html" class="menu-card card-1">
-                <h2>🛒 Realizar Pedido / Presupuesto</h2>
-                <p>Consulta precios netos, stock en tiempo real y utiliza la herramienta de venta por WhatsApp.</p>
+                <h2>🛒 Stock, pedidos  y presupuestos (puedes realizar presupuestos para tus clientes)</h2>
+                <p>Consulta precios, stock(actualizado a las 09:00) y realiza presupuestos.</p>
             </a>
 
-            <!-- 2. Descargas (Catálogo y Tarifas) - Estilo corregido -->
+            <!-- 2. Descargas (Catálogo y Tarifas) -->
             <div class="menu-card card-3">
                 <h2>📥 Catálogo y Tarifas</h2>
-                <p>Accede a la documentación actualizada siempre que la necesites.</p>
+                <p>Documentación actualizada.</p>
                 
                 <div class="download-links-wrapper">
-                    <!-- Botón Catálogo PDF -->
                     <a href="https://drive.google.com/file/d/1hGIb-8DpEWCIAgVW5xJ3a23ugO5PZuOO/view?usp=drive_link" target="_blank" class="btn-download-card">
                         <span>📖</span> Descargar Catálogo PDF
                     </a>
-                    
-                    <!-- Botón Tarifa Excel -->
                     <a href="https://docs.google.com/spreadsheets/d/1DhbKMFnJCfqO9ujj9d4Z8eezPCAPth0nZ0qPMMcWLbQ/edit?usp=drive_link" target="_blank" class="btn-download-card">
                         <span>📊</span> Descargar Tarifa Excel
                     </a>
@@ -51,27 +41,20 @@
             <!-- 3. Fichas Técnicas -->
             <a href="fichas.html" class="menu-card card-5">
                 <h2>📄 Fichas Técnicas</h2>
-                <p>Buscador rápido de fichas técnicas, certificados de calidad e imágenes.</p>
+                <p>Buscador rápido de fichas técnicas.</p>
             </a>
             
             <!-- 4. Garantías -->
             <a href="garantias.html" class="menu-card card-2">
                 <h2>⚠️ Gestión de Garantías</h2>
-                <p>Formulario para tramitar devoluciones e incidencias de forma ágil.</p>
+                <p>Tramitar devoluciones e incidencias.</p>
             </a>
         </main>
 
         <footer class="site-footer">
             <p><strong>CV Tools &copy; <span id="year"></span></strong></p>
-            
-            <div style="max-width: 650px; margin: 20px auto; padding: 0 15px; border-top: 1px solid #eee; padding-top: 15px;">
-                <p style="font-size: 0.95rem; color: #555; line-height: 1.5; margin-bottom: 8px;">
-                    Esta herramienta ha sido diseñada exclusivamente para facilitar y agilizar nuestro trabajo conjunto.
-                </p>
-                <p style="font-size: 0.85rem; color: #777; font-style: italic;">
-                    Estamos comprometidos con tu éxito: si tienes cualquier inquietud o sugerencia para mejorarla, 
-                    por favor háznoslo saber. Tu opinión nos ayuda a crecer.
-                </p>
+            <div class="footer-note">
+                <p>Herramienta exclusiva para clientes profesionales.</p>
             </div>
         </footer>
     </div>
